@@ -1,0 +1,34 @@
+# 告诉spring boot使用哪个配置文件启动
+# 如果直接将配置写在这里, 就代表是通用的配置
+spring:
+#  profiles:
+#    active: prod
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seckill
+#    url: jdbc:mysql://localhost:3306/spring_transaction
+    username: root
+    password: 1703649
+#  jpa:
+#    hibernate:
+#      #这是最常用的一种策略, 如果表不存在会根据java程序中定义的Entity自动建表.
+#      ddl-auto: update
+#    show-sql: true
+#  redis:
+#    host: localhost
+#    port: 6379
+#    password: secret
+mybatis:
+  configuration:
+    # 使用数据库自增主键策略
+    use-generated-keys: true
+    # 允许为列设置别名, 例如select name as title ...
+    use-column-label: true
+    # 开启驼峰命名转换, 例如Table(create_time) 到 Entity(createTime)
+    map-underscore-to-camel-case: true
+redis:
+  cache:
+    ip: localhost
+    port: 6379
+
+
