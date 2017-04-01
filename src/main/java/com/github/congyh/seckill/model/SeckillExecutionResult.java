@@ -1,6 +1,7 @@
 package com.github.congyh.seckill.model;
 
 import com.github.congyh.seckill.entity.SuccessKilled;
+import com.github.congyh.seckill.enums.SeckillExecutionStatus;
 
 /**
  * 秒杀操作结果封装类
@@ -10,28 +11,33 @@ import com.github.congyh.seckill.entity.SuccessKilled;
 public class SeckillExecutionResult {
 
     private long seckillId;
+    private long userPhone;
+
+    // TODO 能够将下面两个字段封装为枚举
+    // 现在这样写是因为用枚举的话传输可能会有问题.
     /** 秒杀结果执行状态 */
     private int status;
     private String statusInfo;
-    /** 秒杀成功对象 */
-    private SuccessKilled successKilled;
+//    /** 秒杀成功对象 */
+//    private SuccessKilled successKilled;
 
-    public SeckillExecutionResult(long seckillId, int status,
-                                  String statusInfo, SuccessKilled successKilled) {
+    public SeckillExecutionResult(long seckillId,
+                                  long userPhone,
+                                  SeckillExecutionStatus seckillExecutionStatus) {
         this.seckillId = seckillId;
-        this.status = status;
-        this.statusInfo = statusInfo;
-        this.successKilled = successKilled;
+        this.userPhone = userPhone;
+        this.status = seckillExecutionStatus.getStatus();
+        this.statusInfo = seckillExecutionStatus.getStatusInfo();
     }
 
     /**
-     * 失败状态
+     * 秒杀失败
      *
      * @param seckillId 秒杀id
-     * @param status 秒杀结果状态
-     * @param statusInfo 秒杀结果详情
+     * @param seckillExecutionStatus 秒杀结果状态枚举
      */
-    public SeckillExecutionResult(long seckillId, int status, String statusInfo) {
+    public SeckillExecutionResult(long seckillId,
+                                  SeckillExecutionStatus seckillExecutionStatus) {
         this.seckillId = seckillId;
         this.status = status;
         this.statusInfo = statusInfo;
@@ -61,11 +67,19 @@ public class SeckillExecutionResult {
         this.statusInfo = statusInfo;
     }
 
-    public SuccessKilled getSuccessKilled() {
-        return successKilled;
+    public long getUserPhone() {
+        return userPhone;
     }
 
-    public void setSuccessKilled(SuccessKilled successKilled) {
-        this.successKilled = successKilled;
+    public void setUserPhone(long userPhone) {
+        this.userPhone = userPhone;
     }
+
+//    public SuccessKilled getSuccessKilled() {
+//        return successKilled;
+//    }
+//
+//    public void setSuccessKilled(SuccessKilled successKilled) {
+//        this.successKilled = successKilled;
+//    }
 }

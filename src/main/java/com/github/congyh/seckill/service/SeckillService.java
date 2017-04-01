@@ -43,5 +43,5 @@ public interface SeckillService {
      * @throws SeckillEndException 秒杀结束异常
      */
     SeckillExecutionResult executeSeckill(long seckillId, long userPhone, String md5)
-        throws RepeatKillException, SeckillEndException;
+        throws SeckillException;
 }
