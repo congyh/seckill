@@ -21,7 +21,7 @@ public interface SeckillService {
 
     List<Seckill> findAll();
 
-    Seckill findById();
+    Seckill findById(long seckillId);
 
     /**
      * 暴露秒杀接口URL
