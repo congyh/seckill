@@ -5,6 +5,12 @@ package com.github.congyh.seckill.exception;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class SeckillEndException extends RuntimeException {
+public class SeckillEndException extends SeckillException {
+    public SeckillEndException(String message) {
+        super(message);
+    }
 
+    public SeckillEndException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

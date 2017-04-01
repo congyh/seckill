@@ -1,6 +1,10 @@
 package com.github.congyh.seckill.service;
 
 import com.github.congyh.seckill.entity.Seckill;
+import com.github.congyh.seckill.exception.RepeatKillException;
+import com.github.congyh.seckill.exception.SeckillEndException;
+import com.github.congyh.seckill.exception.SeckillException;
+import com.github.congyh.seckill.model.SeckillExecutionResult;
 import com.github.congyh.seckill.model.SeckillURL;
 
 import java.util.List;
@@ -35,6 +39,9 @@ public interface SeckillService {
      * @param seckillId 商品id
      * @param userPhone 用户手机号
      * @param md5 加密后的秒杀地址, 用于验证秒杀请求是否合法
+     * @throws RepeatKillException 重复秒杀异常
+     * @throws SeckillEndException 秒杀结束异常
      */
-    void executeSeckill(long seckillId, long userPhone, String md5);
+    SeckillExecutionResult executeSeckill(long seckillId, long userPhone, String md5)
+        throws RepeatKillException, SeckillEndException;
 }
