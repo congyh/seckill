@@ -10,24 +10,24 @@ public class SeckillURL {
     private boolean exposed;
     /** 一种加密措施 */
     private String md5;
-    private Long seckillId;
+    private long seckillId;
     /** 服务器当前时间 */
-    private Long now;
-    private Long start;
-    private Long end;
+    private long now;
+    private long start;
+    private long end;
 
-    public SeckillURL(Boolean exposed, String md5, Long seckillId) {
+    public SeckillURL(boolean exposed, String md5, long seckillId) {
         this.exposed = exposed;
         this.md5 = md5;
         this.seckillId = seckillId;
     }
 
-    public SeckillURL(Boolean exposed, Long seckillId) {
+    public SeckillURL(boolean exposed, long seckillId) {
         this.exposed = exposed;
         this.seckillId = seckillId;
     }
 
-    public SeckillURL(Boolean exposed, Long now, Long start, Long end) {
+    public SeckillURL(boolean exposed, long now, long start, long end) {
 
         this.exposed = exposed;
         this.now = now;
@@ -35,11 +35,11 @@ public class SeckillURL {
         this.end = end;
     }
 
-    public Boolean getExposed() {
+    public boolean getExposed() {
         return exposed;
     }
 
-    public void setExposed(Boolean exposed) {
+    public void setExposed(boolean exposed) {
         this.exposed = exposed;
     }
 
@@ -51,35 +51,35 @@ public class SeckillURL {
         this.md5 = md5;
     }
 
-    public Long getSeckillId() {
+    public long getSeckillId() {
         return seckillId;
     }
 
-    public void setSeckillId(Long seckillId) {
+    public void setSeckillId(long seckillId) {
         this.seckillId = seckillId;
     }
 
-    public Long getNow() {
+    public long getNow() {
         return now;
     }
 
-    public void setNow(Long now) {
+    public void setNow(long now) {
         this.now = now;
     }
 
-    public Long getStart() {
+    public long getStart() {
         return start;
     }
 
-    public void setStart(Long start) {
+    public void setStart(long start) {
         this.start = start;
     }
 
-    public Long getEnd() {
+    public long getEnd() {
         return end;
     }
 
-    public void setEnd(Long end) {
+    public void setEnd(long end) {
         this.end = end;
     }
 }

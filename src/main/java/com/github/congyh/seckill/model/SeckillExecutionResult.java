@@ -9,14 +9,14 @@ import com.github.congyh.seckill.entity.SuccessKilled;
  */
 public class SeckillExecutionResult {
 
-    private Long seckillId;
+    private long seckillId;
     /** 秒杀结果执行状态 */
-    private Integer status;
+    private int status;
     private String statusInfo;
     /** 秒杀成功对象 */
     private SuccessKilled successKilled;
 
-    public SeckillExecutionResult(Long seckillId, Integer status,
+    public SeckillExecutionResult(long seckillId, int status,
                                   String statusInfo, SuccessKilled successKilled) {
         this.seckillId = seckillId;
         this.status = status;
@@ -31,25 +31,25 @@ public class SeckillExecutionResult {
      * @param status 秒杀结果状态
      * @param statusInfo 秒杀结果详情
      */
-    public SeckillExecutionResult(Long seckillId, Integer status, String statusInfo) {
+    public SeckillExecutionResult(long seckillId, int status, String statusInfo) {
         this.seckillId = seckillId;
         this.status = status;
         this.statusInfo = statusInfo;
     }
 
-    public Long getSeckillId() {
+    public long getSeckillId() {
         return seckillId;
     }
 
-    public void setSeckillId(Long seckillId) {
+    public void setSeckillId(long seckillId) {
         this.seckillId = seckillId;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
