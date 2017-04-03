@@ -27,6 +27,18 @@ public class SeckillURL {
         this.seckillId = seckillId;
     }
 
+    @Override
+    public String toString() {
+        return "SeckillURL{" +
+            "exposed=" + exposed +
+            ", md5='" + md5 + '\'' +
+            ", seckillId=" + seckillId +
+            ", now=" + now +
+            ", start=" + start +
+            ", end=" + end +
+            '}';
+    }
+
     public SeckillURL(boolean exposed, long now, long start, long end) {
 
         this.exposed = exposed;
@@ -35,7 +47,7 @@ public class SeckillURL {
         this.end = end;
     }
 
-    public boolean getExposed() {
+    public boolean isExposed() {
         return exposed;
     }
 

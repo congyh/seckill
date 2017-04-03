@@ -1,6 +1,5 @@
 package com.github.congyh.seckill.model;
 
-import com.github.congyh.seckill.entity.SuccessKilled;
 import com.github.congyh.seckill.enums.SeckillExecutionStatus;
 
 /**
@@ -41,6 +40,16 @@ public class SeckillExecutionResult {
         this.seckillId = seckillId;
         this.status = status;
         this.statusInfo = statusInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "SeckillExecutionResult{" +
+            "seckillId=" + seckillId +
+            ", userPhone=" + userPhone +
+            ", status=" + status +
+            ", statusInfo='" + statusInfo + '\'' +
+            '}';
     }
 
     public long getSeckillId() {
