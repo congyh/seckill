@@ -2,6 +2,7 @@ package com.github.congyh.seckill.web;
 
 import com.github.congyh.seckill.entity.Product;
 import com.github.congyh.seckill.model.JsonResponse;
+import com.github.congyh.seckill.model.SeckillExecutionResult;
 import com.github.congyh.seckill.model.SeckillURL;
 import com.github.congyh.seckill.service.SeckillService;
 import com.github.congyh.seckill.utils.JsonResponseUtils;
@@ -46,20 +47,40 @@ public class SeckillController {
         Product product = seckillService.findById(id);
         model.addAttribute("product", product);
 
-        return "productDetail";
+        return "product-detail";
     }
+
 
     /**
      * 暴露秒杀URL地址给ajax调用
      *
      * @param id 秒杀商品id
-     * @return
+     * @return 秒杀地址
      */
-    @PostMapping("/products/{id}/url")
+    @PostMapping("/products/{id}")
     @ResponseBody
     public JsonResponse<SeckillURL> seckillUrl(@PathVariable("id") long id) {
         SeckillURL seckillURL = seckillService.exposeSeckillUrl(id);
         return JsonResponseUtils.success(seckillURL);
     }
+
+    /**
+     * 执行秒杀操作
+     *
+     * @param id 秒杀商品id
+     * @param url 秒杀url
+     * @param userPhone 用户手机号
+     * @return 秒杀执行结果
+     */
+    @PostMapping("/products/{id}/{url}")
+    @ResponseBody
+    public JsonResponse<SeckillExecutionResult> seckillUrl(@PathVariable("id") long id,
+                                               @PathVariable("url") String url,
+                                               @CookieValue(value = "userPhone", required = false) long userPhone) {
+        SeckillExecutionResult seckillExecutionResult
+             = seckillService.executeSeckill(id, userPhone, url);
+        return JsonResponseUtils.success(seckillExecutionResult);
+    }
+
 
 }
