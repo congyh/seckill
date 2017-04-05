@@ -1,7 +1,7 @@
 package com.github.congyh.seckill.cache;
 
-import com.github.congyh.seckill.dao.SeckillMapper;
-import com.github.congyh.seckill.entity.Seckill;
+import com.github.congyh.seckill.dao.ProductMapper;
+import com.github.congyh.seckill.entity.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +18,18 @@ public class RedisCacheTest {
     private RedisCache redisCache;
 
     @Autowired
-    private SeckillMapper seckillMapper;
+    private ProductMapper productMapper;
 
     @Test
     public void getSeckill() throws Exception {
         // TODO 没写
-        System.out.println(seckillMapper.findById(1001));
+        System.out.println(productMapper.findById(1001));
     }
 
     @Test
     public void setSeckill() throws Exception {
         // TODO 没写
-        Seckill seckill = new Seckill();
-        String s = redisCache.setSeckill(seckill);
+        Product product = new Product();
+        String s = redisCache.setProduct(product);
     }
 }

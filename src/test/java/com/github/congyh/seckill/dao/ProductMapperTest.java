@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.dao;
 
-import com.github.congyh.seckill.entity.Seckill;
+import com.github.congyh.seckill.entity.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,29 +17,29 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SeckillMapperTest {
+public class ProductMapperTest {
 
     @Autowired
-    SeckillMapper seckillMapper;
+    ProductMapper productMapper;
 
     @Test
     public void reduceNumber() throws Exception {
         Date killTime = new Date();
-        int affectedRowNums = seckillMapper.reduceNumber(1000, killTime);
+        int affectedRowNums = productMapper.reduceNumber(1000, killTime);
         assertTrue(1 == affectedRowNums);
     }
 
     @Test
     public void findById() throws Exception {
-        Seckill seckill = seckillMapper.findById(1001);
-        System.out.println(seckill);
+        Product product = productMapper.findById(1001);
+        System.out.println(product);
     }
 
     @Test
     public void findAll() throws Exception {
-        List<Seckill> list = seckillMapper.findAll(0, 5);
-        for (Seckill seckill : list) {
-            System.out.println(seckill);
+        List<Product> list = productMapper.findAll(0, 5);
+        for (Product product : list) {
+            System.out.println(product);
         }
     }
 

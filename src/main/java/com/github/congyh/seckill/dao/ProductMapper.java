@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.dao;
 
-import com.github.congyh.seckill.entity.Seckill;
+import com.github.congyh.seckill.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -10,51 +10,49 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * seckill表Mapper
- *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
 @Mapper
-public interface SeckillMapper {
+public interface ProductMapper {
     /** 减库存 */
     String REDUCE_NUMBER = "" +
-        "update seckill " +
+        "update product " +
         "set number = number - 1 " +
-        "where seckill_id = #{seckillId} " +
+        "where id = #{id} " +
         "and start_time <= #{killTime} " +
         "and end_time >= #{killTime} " +
         "and number > 0";
 
     /** 查询库存*/
     String FIND_BY_ID = "" +
-        "select * from seckill " +
-        "where seckill_id = #{seckillId}";
+        "select * from product " +
+        "where id = #{id}";
 
     /** 查询全部库存 */
     String FIND_ALL = "" +
-        "select * from seckill " +
+        "select * from product " +
         "order by create_time desc " +
         "limit #{offset}, #{limit}";
 
     /**
      * 减库存
      *
-     * @param seckillId 秒杀商品id
+     * @param id 秒杀商品id
      * @param killTime 秒杀时间
      * @return 更新语句影响的行数, 如果是0的话, 说明没有执行成功.
      */
     @Update(REDUCE_NUMBER)
-    int reduceNumber(@Param("seckillId") long seckillId,
+    int reduceNumber(@Param("id") long id,
                      @Param("killTime") Date killTime);
 
     /**
-     * 查询库存
+     * 查询单个商品详情
      *
-     * @param seckillId 秒杀商品id
-     * @return
+     * @param id 秒杀商品id
+     * @return 单个商品详情
      */
     @Select(FIND_BY_ID)
-    Seckill findById(@Param("seckillId") long seckillId);
+    Product findById(@Param("id") long id);
 
     /**
      * 根据偏移量查询秒杀商品列表
@@ -64,6 +62,6 @@ public interface SeckillMapper {
      * @return 秒杀商品列表
      */
     @Select(FIND_ALL)
-    List<Seckill> findAll(@Param("offset") int offset,
+    List<Product> findAll(@Param("offset") int offset,
                           @Param("limit") int limit);
 }

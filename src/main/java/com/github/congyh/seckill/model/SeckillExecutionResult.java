@@ -9,7 +9,7 @@ import com.github.congyh.seckill.enums.SeckillExecutionStatus;
  */
 public class SeckillExecutionResult {
 
-    private long seckillId;
+    private long productId;
     private long userPhone;
 
     // TODO 能够将下面两个字段封装为枚举
@@ -18,12 +18,12 @@ public class SeckillExecutionResult {
     private int status;
     private String statusInfo;
 //    /** 秒杀成功对象 */
-//    private SuccessKilled successKilled;
+//    private OrderDetail successKilled;
 
-    public SeckillExecutionResult(long seckillId,
+    public SeckillExecutionResult(long productId,
                                   long userPhone,
                                   SeckillExecutionStatus seckillExecutionStatus) {
-        this.seckillId = seckillId;
+        this.productId = productId;
         this.userPhone = userPhone;
         this.status = seckillExecutionStatus.getStatus();
         this.statusInfo = seckillExecutionStatus.getStatusInfo();
@@ -32,12 +32,12 @@ public class SeckillExecutionResult {
     /**
      * 秒杀失败
      *
-     * @param seckillId 秒杀id
+     * @param productId 秒杀id
      * @param seckillExecutionStatus 秒杀结果状态枚举
      */
-    public SeckillExecutionResult(long seckillId,
+    public SeckillExecutionResult(long productId,
                                   SeckillExecutionStatus seckillExecutionStatus) {
-        this.seckillId = seckillId;
+        this.productId = productId;
         this.status = status;
         this.statusInfo = statusInfo;
     }
@@ -45,7 +45,7 @@ public class SeckillExecutionResult {
     @Override
     public String toString() {
         return "SeckillExecutionResult{" +
-            "seckillId=" + seckillId +
+            "productId=" + productId +
             ", userPhone=" + userPhone +
             ", status=" + status +
             ", statusInfo='" + statusInfo + '\'' +
@@ -53,11 +53,11 @@ public class SeckillExecutionResult {
     }
 
     public long getSeckillId() {
-        return seckillId;
+        return productId;
     }
 
-    public void setSeckillId(long seckillId) {
-        this.seckillId = seckillId;
+    public void setSeckillId(long productId) {
+        this.productId = productId;
     }
 
     public int getStatus() {
@@ -84,11 +84,11 @@ public class SeckillExecutionResult {
         this.userPhone = userPhone;
     }
 
-//    public SuccessKilled getSuccessKilled() {
+//    public OrderDetail getOrder() {
 //        return successKilled;
 //    }
 //
-//    public void setSuccessKilled(SuccessKilled successKilled) {
+//    public void setOrder(OrderDetail successKilled) {
 //        this.successKilled = successKilled;
 //    }
 }

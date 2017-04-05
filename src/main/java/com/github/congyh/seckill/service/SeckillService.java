@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.service;
 
-import com.github.congyh.seckill.entity.Seckill;
+import com.github.congyh.seckill.entity.Product;
 import com.github.congyh.seckill.exception.RepeatKillException;
 import com.github.congyh.seckill.exception.SeckillEndException;
 import com.github.congyh.seckill.exception.SeckillException;
@@ -19,29 +19,29 @@ import java.util.List;
  */
 public interface SeckillService {
 
-    List<Seckill> findAll();
+    List<Product> findAll();
 
-    Seckill findById(long seckillId);
+    Product findById(long productId);
 
     /**
      * 暴露秒杀接口URL
      *
      * <p>秒杀开启时输出秒杀接口地址, 否则输出系统时间和秒杀时间</p>
      *
-     * @param seckillId 秒杀商品id
+     * @param productId 秒杀商品id
      * @return 秒杀地址
      */
-    SeckillURL exposeSeckillUrl(long seckillId);
+    SeckillURL exposeSeckillUrl(long productId);
 
     /**
      * 执行秒杀
      *
-     * @param seckillId 商品id
+     * @param productId 商品id
      * @param userPhone 用户手机号
      * @param md5 加密后的秒杀地址, 用于验证秒杀请求是否合法
      * @throws RepeatKillException 重复秒杀异常
      * @throws SeckillEndException 秒杀结束异常
      */
-    SeckillExecutionResult executeSeckill(long seckillId, long userPhone, String md5)
+    SeckillExecutionResult executeSeckill(long productId, long userPhone, String md5)
         throws SeckillException;
 }

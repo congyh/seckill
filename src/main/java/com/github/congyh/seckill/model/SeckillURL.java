@@ -10,21 +10,21 @@ public class SeckillURL {
     private boolean exposed;
     /** 一种加密措施 */
     private String md5;
-    private long seckillId;
+    private long productId;
     /** 服务器当前时间 */
     private long now;
     private long start;
     private long end;
 
-    public SeckillURL(boolean exposed, String md5, long seckillId) {
+    public SeckillURL(boolean exposed, String md5, long productId) {
         this.exposed = exposed;
         this.md5 = md5;
-        this.seckillId = seckillId;
+        this.productId = productId;
     }
 
-    public SeckillURL(boolean exposed, long seckillId) {
+    public SeckillURL(boolean exposed, long productId) {
         this.exposed = exposed;
-        this.seckillId = seckillId;
+        this.productId = productId;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class SeckillURL {
         return "SeckillURL{" +
             "exposed=" + exposed +
             ", md5='" + md5 + '\'' +
-            ", seckillId=" + seckillId +
+            ", productId=" + productId +
             ", now=" + now +
             ", start=" + start +
             ", end=" + end +
@@ -64,11 +64,11 @@ public class SeckillURL {
     }
 
     public long getSeckillId() {
-        return seckillId;
+        return productId;
     }
 
-    public void setSeckillId(long seckillId) {
-        this.seckillId = seckillId;
+    public void setSeckillId(long productId) {
+        this.productId = productId;
     }
 
     public long getNow() {

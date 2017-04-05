@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.service.impl;
 
-import com.github.congyh.seckill.entity.Seckill;
+import com.github.congyh.seckill.entity.Product;
 import com.github.congyh.seckill.model.SeckillExecutionResult;
 import com.github.congyh.seckill.model.SeckillURL;
 import com.github.congyh.seckill.service.SeckillService;
@@ -35,8 +35,8 @@ public class SeckillServiceImplTest {
 
     @Test
     public void findAll() throws Exception {
-        List<Seckill> seckillList = seckillService.findAll();
-        logger.info("list={}", seckillList);
+        List<Product> productList = seckillService.findAll();
+        logger.info("list={}", productList);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class SeckillServiceImplTest {
 
     @Test
     public void executeSeckill() throws Exception {
-        SeckillURL seckillURL = seckillService.exposeSeckillUrl(1003);
+        SeckillURL seckillURL = seckillService.exposeSeckillUrl(1001);
         if (seckillURL.isExposed()) {
             logger.info("SeckillURL={}", seckillURL);
 

@@ -3,11 +3,15 @@ package com.github.congyh.seckill.entity;
 import java.util.Date;
 
 /**
+ * 订单
+ *
+ * <p>秒杀成功后, 会生成订单</p>
+ *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class SuccessKilled {
+public class OrderDetail {
     /** 多对一对应关系, 在多的一方记录下唯一实体, 方便后续操作 */
-    private Seckill seckill;
+    private Product product;
     private Long userPhone;
     private Short state;
     private Date createTime;
@@ -36,18 +40,18 @@ public class SuccessKilled {
         this.createTime = createTime;
     }
 
-    public Seckill getSeckill() {
-        return seckill;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setSeckill(Seckill seckill) {
-        this.seckill = seckill;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override
     public String toString() {
-        return "SuccessKilled{" +
-            "seckill=" + seckill +
+        return "OrderDetail{" +
+            "product=" + product +
             ", userPhone=" + userPhone +
             ", state=" + state +
             ", createTime=" + createTime +

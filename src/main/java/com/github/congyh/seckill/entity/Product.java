@@ -3,22 +3,24 @@ package com.github.congyh.seckill.entity;
 import java.util.Date;
 
 /**
+ * 秒杀商品实体
+ *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class Seckill {
-    private Long seckillId;
+public class Product {
+    private Long id;
     private String name;
     private Integer number;
     private Date startTime;
     private Date endTime;
     private Date createTime;
 
-    public Long getSeckillId() {
-        return seckillId;
+    public Long getId() {
+        return id;
     }
 
-    public void setSeckillId(Long seckillId) {
-        this.seckillId = seckillId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -63,8 +65,8 @@ public class Seckill {
 
     @Override
     public String toString() {
-        return "Seckill{" +
-            "seckillId=" + seckillId +
+        return "Product{" +
+            "id=" + id +
             ", name='" + name + '\'' +
             ", number=" + number +
             ", startTime=" + startTime +
