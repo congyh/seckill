@@ -40,6 +40,13 @@ public class SeckillController {
        return "products";
     }
 
+    /**
+     * 商品详情页
+     *
+     * @param id 商品id
+     * @param model 商品信息
+     * @return 商品详情页地址
+     */
     @GetMapping("/products/{id}")
     public String productDetail(@PathVariable("id") long id,
                            Model model) {
@@ -57,7 +64,7 @@ public class SeckillController {
      * @param id 秒杀商品id
      * @return 秒杀地址
      */
-    @PostMapping("/products/{id}")
+    @GetMapping("/products/{id}/seckillUrl")
     @ResponseBody
     public JsonResponse<SeckillURL> seckillUrl(@PathVariable("id") long id) {
         SeckillURL seckillURL = seckillService.exposeSeckillUrl(id);
@@ -72,7 +79,7 @@ public class SeckillController {
      * @param userPhone 用户手机号
      * @return 秒杀执行结果
      */
-    @PostMapping("/products/{id}/{url}")
+    @GetMapping("/products/{id}/{url}")
     @ResponseBody
     public JsonResponse<SeckillExecutionResult> seckillUrl(@PathVariable("id") long id,
                                                @PathVariable("url") String url,

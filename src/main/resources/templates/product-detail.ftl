@@ -7,7 +7,7 @@
 
 <body>
 <div class="container">
-    <div class="panel">
+    <div class="panel text-center">
         <div class="panel-heading">
             <h2>${product.name}</h2>
         </div>
@@ -16,7 +16,7 @@
             <#--时钟图标-->
                 <span class="glyphicon glyphicon-time"></span>
             <#--计时面板-->
-                <span class="glyphicon" id="seckill-time"></span>
+                <span id="countdown-message"></span>
             </h2>
         </div>
     </div>
@@ -35,12 +35,12 @@
                 <div class="row">
                     <div class="col-xs-8 clo-xs-offset-2">
                         <input type="text" name="userPhone" id="userPhone"
-                        placeholder="手机号, 例如18810374312" class="form-control" />
+                               placeholder="手机号, 例如18810374312" class="form-control"/>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <#--占位, 用于js返回结果-->
+            <#--占位, 用于js返回结果-->
                 <span class="glyphicon" id="callbackMsg"></span>
                 <button type="button" id="userPhoneBtn" class="btn btn-success">
                     <span class="glyphicon glyphicon-phone"></span>
@@ -63,9 +63,9 @@
     $(function () {
         // 这里参数传入的是一个对象
         seckill.detail.init({
-            productId: ${product.id?replace(',', '')},
-            startTime: '${product.startTime?datetime}',
-            endTime: '${product.endTime?datetime}'
+            productId: ${product.id?c},
+            startTime: '${product.startTime?long?c}',
+            endTime: '${product.endTime?long?c}'
         })
     });
 </script>
