@@ -7,11 +7,11 @@ package com.github.congyh.seckill.exception;
  */
 public class WrongURLException extends SeckillException {
 
-    public WrongURLException(String message) {
-        super(message);
+    public WrongURLException() {
+        this("秒杀地址错误!");
     }
 
-    public WrongURLException(String message, Throwable cause) {
-        super(message, cause);
+    public WrongURLException(String message) {
+        super(message);
     }
 }

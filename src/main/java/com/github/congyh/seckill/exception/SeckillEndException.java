@@ -6,11 +6,11 @@ package com.github.congyh.seckill.exception;
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
 public class SeckillEndException extends SeckillException {
-    public SeckillEndException(String message) {
-        super(message);
+    public SeckillEndException() {
+        this("该商品的秒杀已经结束!");
     }
 
-    public SeckillEndException(String message, Throwable cause) {
-        super(message, cause);
+    public SeckillEndException(String message) {
+        super(message);
     }
 }
