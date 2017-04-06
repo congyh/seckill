@@ -58,7 +58,7 @@ public class SeckillServiceImpl implements SeckillService {
         Product product = redisCache.getProduct(productId);
         if (product == null) {
             product = productMapper.findById(productId);
-            // TODO 空指针异常最好也统一处理, 比较困难的是如何自动判别空的类型?
+            // TODO 空指针异常最好也统一处理, 比较困难的是如何自动判别空的类型? 还是直接不判断了?
         }
 
         Date startTime = product.getStartTime();
@@ -98,8 +98,8 @@ public class SeckillServiceImpl implements SeckillService {
      * @param productId 商品id
      * @param userPhone 用户手机号
      * @param md5 加密后的秒杀地址, 用于验证秒杀请求是否合法
-     * @return
-     * @throws SeckillException
+     * @return 秒杀结果
+     * @throws SeckillException 秒杀异常
      */
     @Override
     @Transactional

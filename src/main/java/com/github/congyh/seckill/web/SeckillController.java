@@ -5,7 +5,7 @@ import com.github.congyh.seckill.model.JsonResponse;
 import com.github.congyh.seckill.model.SeckillExecutionResult;
 import com.github.congyh.seckill.model.SeckillURL;
 import com.github.congyh.seckill.service.SeckillService;
-import com.github.congyh.seckill.utils.JsonResponseUtils;
+import com.github.congyh.seckill.utils.JsonResponseBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,7 @@ public class SeckillController {
     @ResponseBody
     public JsonResponse<SeckillURL> seckillUrl(@PathVariable("id") long id) {
         SeckillURL seckillURL = seckillService.exposeSeckillUrl(id);
-        return JsonResponseUtils.success(seckillURL);
+        return JsonResponseBuilder.success(seckillURL);
     }
 
     /**
@@ -86,7 +86,7 @@ public class SeckillController {
                                                @CookieValue(value = "userPhone", required = false) long userPhone) {
         SeckillExecutionResult seckillExecutionResult
              = seckillService.executeSeckill(id, userPhone, url);
-        return JsonResponseUtils.success(seckillExecutionResult);
+        return JsonResponseBuilder.success(seckillExecutionResult);
     }
 
 

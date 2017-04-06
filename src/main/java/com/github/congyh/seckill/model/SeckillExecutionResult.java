@@ -17,8 +17,6 @@ public class SeckillExecutionResult {
     /** 秒杀结果执行状态 */
     private int status;
     private String statusInfo;
-//    /** 秒杀成功对象 */
-//    private OrderDetail successKilled;
 
     public SeckillExecutionResult(long productId,
                                   long userPhone,
@@ -83,12 +81,4 @@ public class SeckillExecutionResult {
     public void setUserPhone(long userPhone) {
         this.userPhone = userPhone;
     }
-
-//    public OrderDetail getOrder() {
-//        return successKilled;
-//    }
-//
-//    public void setOrder(OrderDetail successKilled) {
-//        this.successKilled = successKilled;
-//    }
 }

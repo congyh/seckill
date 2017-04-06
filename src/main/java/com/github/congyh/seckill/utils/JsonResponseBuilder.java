@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.utils;
 
-import com.github.congyh.seckill.enums.JsonResponseStatus;
+import com.github.congyh.seckill.enums.JsonResponseCode;
 import com.github.congyh.seckill.model.JsonResponse;
 
 /**
@@ -8,7 +8,7 @@ import com.github.congyh.seckill.model.JsonResponse;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public final class JsonResponseUtils {
+public final class JsonResponseBuilder {
 
     /**
      * 返回成功状态的Json响应
@@ -19,10 +19,15 @@ public final class JsonResponseUtils {
      */
     public static <T> JsonResponse<T> success(T data) {
         JsonResponse<T> jsonResponse = new JsonResponse<T>();
-        jsonResponse.setCode(JsonResponseStatus.SUCEESS.getStatus());
+        jsonResponse.setCode(JsonResponseCode.SUCEESS.getCoce());
         jsonResponse.setData(data);
-        jsonResponse.setMsg(JsonResponseStatus.SUCEESS.getMessage());
+        jsonResponse.setMsg(JsonResponseCode.SUCEESS.getMessage());
 
         return jsonResponse;
+    }
+
+    public static JsonResponse withCode(JsonResponseCode code) {
+        // TODO 还没有实现
+        return null;
     }
 }
