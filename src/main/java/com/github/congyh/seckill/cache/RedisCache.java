@@ -40,7 +40,7 @@ public class RedisCache {
     public Product getProduct(long productId) {
         try (Jedis jedis = jedisPool.getResource()) {
             /* 反序列化过程: get(byte[]) -> Product */
-            String key = "seckill:" + productId;
+            String key = "product:" + productId;
             byte[] bytes = jedis.get(key.getBytes());
             if (bytes != null) {
                 // 生成空对象
@@ -70,6 +70,7 @@ public class RedisCache {
             int timeout = 60 * 60;
             // 正确的话返回OK, 错误的话返回错误信息
             String result = jedis.setex(key.getBytes(), timeout, bytes);
+
             return result;
         }
     }

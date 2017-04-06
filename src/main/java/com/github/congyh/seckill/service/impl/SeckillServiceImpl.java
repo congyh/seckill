@@ -1,5 +1,6 @@
 package com.github.congyh.seckill.service.impl;
 
+import com.github.congyh.seckill.cache.RedisCache;
 import com.github.congyh.seckill.dao.ProductMapper;
 import com.github.congyh.seckill.dao.OrderDetailMapper;
 import com.github.congyh.seckill.entity.Product;
@@ -28,8 +29,8 @@ import java.util.List;
 public class SeckillServiceImpl implements SeckillService {
 
     private static Logger logger = LoggerFactory.getLogger(SeckillServiceImpl.class);
-    // TODO 还没有搞明白具体的作用是什么
     // 提高MD5算法的加密程度
+    // TODO 前端部分, 也就是product-detail.ftl中md5与productId会一并传递过去, 还是不安全??
     private static final String SALT = "gatg25tagfgp['lf[pal[;l,.l;";
 
     @Autowired
@@ -37,6 +38,9 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Autowired
     private OrderDetailMapper orderDetailMapper;
+
+    @Autowired
+    private RedisCache redisCache;
 
     @Override
     public List<Product> findAll() {
@@ -50,7 +54,13 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public SeckillURL exposeSeckillUrl(long productId) {
-        Product product = productMapper.findById(productId);
+        // TODO 缓存最后要以横切的方式实现
+        Product product = redisCache.getProduct(productId);
+        if (product == null) {
+            product = productMapper.findById(productId);
+            // TODO 空指针异常最好也统一处理, 比较困难的是如何自动判别空的类型?
+        }
+
         Date startTime = product.getStartTime();
         Date endTime = product.getEndTime();
         // 首先需要判断秒杀是否开启, 如果没有开启输出服务器时间和秒杀时间范围
@@ -74,23 +84,36 @@ public class SeckillServiceImpl implements SeckillService {
         return DigestUtils.md5DigestAsHex(base.getBytes());
     }
 
+    /**
+     * 执行秒杀
+     *
+     * <pre>注意: 事务中语句的顺序能够极大影响程序并发能力, 例如下面的程序
+     * 1. 将秒杀地址是否正确的判断放在最前, 这是一个本地的判断, 速度很快.
+     * 2. 尝试进行秒杀成功记录操作. 注意: 将插入操作放在前面是为了在rowLock发生之前可以
+     * 淘汰掉一部分重复秒杀情况, 同时将事务操作的瓶颈减少到实际发生rowLock的语句上,
+     * 因为其他语句都可以无锁并发执行.
+     * 3. 真正的rowLock发生地, 减库存操作.
+     * </pre>
+     *
+     * @param productId 商品id
+     * @param userPhone 用户手机号
+     * @param md5 加密后的秒杀地址, 用于验证秒杀请求是否合法
+     * @return
+     * @throws SeckillException
+     */
     @Override
     @Transactional
     public SeckillExecutionResult executeSeckill(long productId, long userPhone, String md5)
         throws SeckillException {
 
-        // 如果地址没有传过来, 或者是地址不符合按我们算法加密后的URL值
         if (md5 == null || !md5.equals(toMD5(productId))) {
-            throw new WrongURLException("秒杀地址错误!");
+            throw new WrongURLException();
         }
-        // 执行业务逻辑
-        // 1. 尝试进行减库存操作
-        if (productMapper.reduceNumber(productId, new Date()) == 0) {
-            throw new SeckillEndException("该商品的秒杀已经结束!");
-        }
-        // 2. 尝试进行秒杀成功记录操作
         if (orderDetailMapper.save(productId, userPhone) == 0) {
-            throw new RepeatKillException("您已成功秒杀, 无法重复秒杀!");
+            throw new RepeatKillException();
+        }
+        if (productMapper.reduceNumber(productId, new Date()) == 0) {
+            throw new SeckillEndException();
         }
 
         return new SeckillExecutionResult(productId, userPhone, SeckillExecutionStatus.SUCCESS);

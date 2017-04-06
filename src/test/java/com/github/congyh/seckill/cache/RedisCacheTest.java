@@ -21,15 +21,17 @@ public class RedisCacheTest {
     private ProductMapper productMapper;
 
     @Test
-    public void getSeckill() throws Exception {
-        // TODO 没写
-        System.out.println(productMapper.findById(1001));
-    }
-
-    @Test
-    public void setSeckill() throws Exception {
-        // TODO 没写
-        Product product = new Product();
-        String s = redisCache.setProduct(product);
+    public void setAndGetSeckill() throws Exception {
+        final long id = 1001;
+        Product product = redisCache.getProduct(id);
+        if (product == null) {
+            product = productMapper.findById(id);
+            if (product != null) {
+                redisCache.setProduct(product);
+                System.out.println(product);
+                product = redisCache.getProduct(id);
+                System.out.println(product);
+            }
+        }
     }
 }
