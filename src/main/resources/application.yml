@@ -1,3 +1,4 @@
+
 # 告诉spring boot使用哪个配置文件启动
 # 如果直接将配置写在这里, 就代表是通用的配置
 spring:
@@ -30,5 +31,7 @@ redis:
   cache:
     ip: localhost
     port: 6379
+server:
+  port: 8081
 
 
