@@ -1,13 +1,13 @@
-package com.github.congyh.seckill.model;
+package com.github.congyh.seckill.dto;
 
-import com.github.congyh.seckill.enums.SeckillExecutionStatus;
+import com.github.congyh.seckill.enums.SeckillExecutionStatusEnum;
 
 /**
  * 秒杀操作结果封装类
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class SeckillExecutionResult {
+public class SeckillExecutionDTO {
 
     private long productId;
     private long userPhone;
@@ -18,23 +18,23 @@ public class SeckillExecutionResult {
     private int status;
     private String statusInfo;
 
-    public SeckillExecutionResult(long productId,
-                                  long userPhone,
-                                  SeckillExecutionStatus seckillExecutionStatus) {
+    public SeckillExecutionDTO(long productId,
+                               long userPhone,
+                               SeckillExecutionStatusEnum seckillExecutionStatusEnum) {
         this.productId = productId;
         this.userPhone = userPhone;
-        this.status = seckillExecutionStatus.getStatus();
-        this.statusInfo = seckillExecutionStatus.getStatusInfo();
+        this.status = seckillExecutionStatusEnum.getStatus();
+        this.statusInfo = seckillExecutionStatusEnum.getStatusInfo();
     }
 
     /**
      * 秒杀失败
      *
      * @param productId 秒杀id
-     * @param seckillExecutionStatus 秒杀结果状态枚举
+     * @param seckillExecutionStatusEnum 秒杀结果状态枚举
      */
-    public SeckillExecutionResult(long productId,
-                                  SeckillExecutionStatus seckillExecutionStatus) {
+    public SeckillExecutionDTO(long productId,
+                               SeckillExecutionStatusEnum seckillExecutionStatusEnum) {
         this.productId = productId;
         this.status = status;
         this.statusInfo = statusInfo;
@@ -42,7 +42,7 @@ public class SeckillExecutionResult {
 
     @Override
     public String toString() {
-        return "SeckillExecutionResult{" +
+        return "SeckillExecutionDTO{" +
             "productId=" + productId +
             ", userPhone=" + userPhone +
             ", status=" + status +

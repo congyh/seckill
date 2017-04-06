@@ -24,7 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <#list productList as item>
+                <#list productDOList as item>
                 <tr>
                     <td>${item.name}</td>
                     <td>${item.number}</td>

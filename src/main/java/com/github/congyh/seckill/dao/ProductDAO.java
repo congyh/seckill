@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.dao;
 
-import com.github.congyh.seckill.entity.Product;
+import com.github.congyh.seckill.domain.ProductDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -13,10 +13,10 @@ import java.util.List;
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
 @Mapper
-public interface ProductMapper {
+public interface ProductDAO {
     /** 减库存 */
     String REDUCE_NUMBER = "" +
-        "update product " +
+        "update seckill_product " +
         "set number = number - 1 " +
         "where id = #{id} " +
         "and start_time <= #{killTime} " +
@@ -25,12 +25,12 @@ public interface ProductMapper {
 
     /** 查询库存*/
     String FIND_BY_ID = "" +
-        "select * from product " +
+        "select * from seckill_product " +
         "where id = #{id}";
 
     /** 查询全部库存 */
     String FIND_ALL = "" +
-        "select * from product " +
+        "select * from seckill_product " +
         "order by create_time desc " +
         "limit #{offset}, #{limit}";
 
@@ -52,7 +52,7 @@ public interface ProductMapper {
      * @return 单个商品详情
      */
     @Select(FIND_BY_ID)
-    Product findById(@Param("id") long id);
+    ProductDO findById(@Param("id") long id);
 
     /**
      * 根据偏移量查询秒杀商品列表
@@ -62,6 +62,6 @@ public interface ProductMapper {
      * @return 秒杀商品列表
      */
     @Select(FIND_ALL)
-    List<Product> findAll(@Param("offset") int offset,
-                          @Param("limit") int limit);
+    List<ProductDO> findAll(@Param("offset") int offset,
+                            @Param("limit") int limit);
 }

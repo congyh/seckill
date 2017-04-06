@@ -1,4 +1,4 @@
-package com.github.congyh.seckill.entity;
+package com.github.congyh.seckill.domain;
 
 import java.util.Date;
 
@@ -9,12 +9,32 @@ import java.util.Date;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class OrderDetail {
+public class OrderDetailDO {
+    private Long id;
     /** 多对一对应关系, 在多的一方记录下唯一实体, 方便后续操作 */
-    private Product product;
+    private ProductDO productDO;
     private Long userPhone;
     private Short state;
     private Date createTime;
+
+    @Override
+    public String toString() {
+        return "OrderDetailDO{" +
+            "productDO=" + productDO +
+            ", id=" + id +
+            ", userPhone=" + userPhone +
+            ", state=" + state +
+            ", createTime=" + createTime +
+            '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getUserPhone() {
         return userPhone;
@@ -40,21 +60,12 @@ public class OrderDetail {
         this.createTime = createTime;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductDO getProductDO() {
+        return productDO;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductDO(ProductDO productDO) {
+        this.productDO = productDO;
     }
 
-    @Override
-    public String toString() {
-        return "OrderDetail{" +
-            "product=" + product +
-            ", userPhone=" + userPhone +
-            ", state=" + state +
-            ", createTime=" + createTime +
-            '}';
-    }
 }

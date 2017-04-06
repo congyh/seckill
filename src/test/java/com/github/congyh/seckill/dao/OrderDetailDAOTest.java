@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.dao;
 
-import com.github.congyh.seckill.entity.OrderDetail;
+import com.github.congyh.seckill.domain.OrderDetailDO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +12,22 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrderDetailMapperTest {
+public class OrderDetailDAOTest {
 
     @Autowired
-    private OrderDetailMapper orderDetailMapper;
+    private OrderDetailDAO orderDetailDAO;
 
     @Test
     public void save() throws Exception {
-        int saveStatus = orderDetailMapper.save(1000, 18823423441L);
+        int saveStatus = orderDetailDAO.save(null, 1000, 18823423441L);
         System.out.println("影响了几行: " + saveStatus + " 行");
     }
 
     @Test
     public void findByIdAndPhone() throws Exception {
-        OrderDetail orderDetail = orderDetailMapper
+        OrderDetailDO orderDetailDO = orderDetailDAO
             .findByIdAndPhone(1000, 18823423441L);
-        System.out.println(orderDetail);
+        System.out.println(orderDetailDO);
     }
 
 }

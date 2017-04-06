@@ -1,11 +1,11 @@
-package com.github.congyh.seckill.model;
+package com.github.congyh.seckill.dto;
 
 /**
  * 封装所有Json类型返回信息
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class JsonResponse<T> {
+public class Result<T> {
 
     /** 错误码 */
     public int code;

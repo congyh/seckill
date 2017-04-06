@@ -1,7 +1,7 @@
 package com.github.congyh.seckill.advice;
 
-import com.github.congyh.seckill.exception.SeckillException;
-import com.github.congyh.seckill.model.JsonResponse;
+import com.github.congyh.seckill.exception.ServiceException;
+import com.github.congyh.seckill.dto.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,11 +26,11 @@ public class ExceptionAdvice {
      * @param e
      * @return
      */
-    @ExceptionHandler(value = SeckillException.class)
+    @ExceptionHandler(value = ServiceException.class)
     @ResponseBody
-    public JsonResponse handleSeckillException(SeckillException e) {
+    public Result handleSeckillException(ServiceException e) {
         logger.error("[秒杀异常] {} ", e);
-//        return JsonResponseBuilder.
+//        return ResultUtils.
         // TODO 待实现.
         return null;
     }

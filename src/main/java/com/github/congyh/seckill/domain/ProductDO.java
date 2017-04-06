@@ -1,4 +1,4 @@
-package com.github.congyh.seckill.entity;
+package com.github.congyh.seckill.domain;
 
 import java.util.Date;
 
@@ -7,13 +7,25 @@ import java.util.Date;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class Product {
+public class ProductDO {
     private Long id;
     private String name;
     private Integer number;
     private Date startTime;
     private Date endTime;
     private Date createTime;
+
+    @Override
+    public String toString() {
+        return "ProductDO{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", number=" + number +
+            ", startTime=" + startTime +
+            ", endTime=" + endTime +
+            ", createTime=" + createTime +
+            '}';
+    }
 
     public Long getId() {
         return id;
@@ -61,17 +73,5 @@ public class Product {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", number=" + number +
-            ", startTime=" + startTime +
-            ", endTime=" + endTime +
-            ", createTime=" + createTime +
-            '}';
     }
 }

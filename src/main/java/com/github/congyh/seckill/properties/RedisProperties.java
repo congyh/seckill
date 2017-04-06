@@ -5,8 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-@ConfigurationProperties("redis.cache")
-public class RedisCacheProperties {
+@ConfigurationProperties("redis")
+public class RedisProperties {
     private String ip;
     private Integer port;
 

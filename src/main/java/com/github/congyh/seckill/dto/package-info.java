@@ -3,4 +3,4 @@
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-package com.github.congyh.seckill.model;
+package com.github.congyh.seckill.dto;

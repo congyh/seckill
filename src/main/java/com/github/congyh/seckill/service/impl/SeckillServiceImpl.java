@@ -1,16 +1,13 @@
 package com.github.congyh.seckill.service.impl;
 
-import com.github.congyh.seckill.cache.RedisCache;
-import com.github.congyh.seckill.dao.ProductMapper;
-import com.github.congyh.seckill.dao.OrderDetailMapper;
-import com.github.congyh.seckill.entity.Product;
-import com.github.congyh.seckill.enums.SeckillExecutionStatus;
-import com.github.congyh.seckill.exception.RepeatKillException;
-import com.github.congyh.seckill.exception.SeckillEndException;
-import com.github.congyh.seckill.exception.SeckillException;
-import com.github.congyh.seckill.exception.WrongURLException;
-import com.github.congyh.seckill.model.SeckillExecutionResult;
-import com.github.congyh.seckill.model.SeckillURL;
+import com.github.congyh.seckill.dao.ProductDAO;
+import com.github.congyh.seckill.dao.RedisDAO;
+import com.github.congyh.seckill.dao.OrderDetailDAO;
+import com.github.congyh.seckill.domain.ProductDO;
+import com.github.congyh.seckill.dto.SeckillExecutionDTO;
+import com.github.congyh.seckill.dto.SeckillUrlDTO;
+import com.github.congyh.seckill.enums.SeckillExecutionStatusEnum;
+import com.github.congyh.seckill.exception.ServiceException;
 import com.github.congyh.seckill.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,43 +31,43 @@ public class SeckillServiceImpl implements SeckillService {
     private static final String SALT = "gatg25tagfgp['lf[pal[;l,.l;";
 
     @Autowired
-    private ProductMapper productMapper;
+    private ProductDAO productDAO;
 
     @Autowired
-    private OrderDetailMapper orderDetailMapper;
+    private OrderDetailDAO orderDetailDAO;
 
     @Autowired
-    private RedisCache redisCache;
+    private RedisDAO redisDAO;
 
     @Override
-    public List<Product> findAll() {
-        return productMapper.findAll(0, 4);
+    public List<ProductDO> findAll() {
+        return productDAO.findAll(0, 4);
     }
 
     @Override
-    public Product findById(long productId) {
-        return productMapper.findById(productId);
+    public ProductDO findById(long productId) {
+        return productDAO.findById(productId);
     }
 
     @Override
-    public SeckillURL exposeSeckillUrl(long productId) {
+    public SeckillUrlDTO exposeSeckillUrl(long productId) {
         // TODO 缓存最后要以横切的方式实现
-        Product product = redisCache.getProduct(productId);
-        if (product == null) {
-            product = productMapper.findById(productId);
+        ProductDO productDO = redisDAO.getProduct(productId);
+        if (productDO == null) {
+            productDO = productDAO.findById(productId);
             // TODO 空指针异常最好也统一处理, 比较困难的是如何自动判别空的类型? 还是直接不判断了?
         }
 
-        Date startTime = product.getStartTime();
-        Date endTime = product.getEndTime();
+        Date startTime = productDO.getStartTime();
+        Date endTime = productDO.getEndTime();
         // 首先需要判断秒杀是否开启, 如果没有开启输出服务器时间和秒杀时间范围
         Date now = new Date();
         if (now.getTime() < startTime.getTime()
             || now.getTime() > endTime.getTime()) {
-            return new SeckillURL(false, now.getTime(), startTime.getTime(), endTime.getTime());
+            return new SeckillUrlDTO(false, now.getTime(), startTime.getTime(), endTime.getTime());
         }
         String seckillURL = toMD5(productId);
-        return new SeckillURL(true, seckillURL, productId);
+        return new SeckillUrlDTO(true, seckillURL, productId);
     }
 
     /**
@@ -99,23 +96,23 @@ public class SeckillServiceImpl implements SeckillService {
      * @param userPhone 用户手机号
      * @param md5 加密后的秒杀地址, 用于验证秒杀请求是否合法
      * @return 秒杀结果
-     * @throws SeckillException 秒杀异常
+     * @throws ServiceException 秒杀异常
      */
     @Override
     @Transactional
-    public SeckillExecutionResult executeSeckill(long productId, long userPhone, String md5)
-        throws SeckillException {
+    public SeckillExecutionDTO executeSeckill(long productId, long userPhone, String md5)
+        throws ServiceException {
 
         if (md5 == null || !md5.equals(toMD5(productId))) {
-            throw new WrongURLException();
+            throw new ServiceException("秒杀地址错误!");
         }
-        if (orderDetailMapper.save(productId, userPhone) == 0) {
-            throw new RepeatKillException();
+        if (orderDetailDAO.save(null, productId, userPhone) == 0) {
+            throw new ServiceException("您已成功秒杀, 无法重复秒杀!");
         }
-        if (productMapper.reduceNumber(productId, new Date()) == 0) {
-            throw new SeckillEndException();
+        if (productDAO.reduceNumber(productId, new Date()) == 0) {
+            throw new ServiceException("该商品的秒杀已经结束!");
         }
 
-        return new SeckillExecutionResult(productId, userPhone, SeckillExecutionStatus.SUCCESS);
+        return new SeckillExecutionDTO(productId, userPhone, SeckillExecutionStatusEnum.SUCCESS);
     }
 }

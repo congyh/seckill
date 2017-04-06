@@ -27,11 +27,11 @@ mybatis:
     use-column-label: true
     # 开启驼峰命名转换, 例如Table(create_time) 到 Entity(createTime)
     map-underscore-to-camel-case: true
-redis:
-  cache:
-    ip: localhost
-    port: 6379
 server:
   port: 8081
+redis:
+  ip: localhost
+  port: 6379
+
 
 

@@ -1,24 +1,24 @@
 package com.github.congyh.seckill.dao;
 
-import com.github.congyh.seckill.entity.OrderDetail;
-import com.github.congyh.seckill.entity.Product;
+import com.github.congyh.seckill.domain.OrderDetailDO;
+import com.github.congyh.seckill.domain.ProductDO;
 import org.apache.ibatis.annotations.*;
 
 /**
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
 @Mapper
-public interface OrderDetailMapper {
+public interface OrderDetailDAO {
 
     /** 秒杀成功, 生成订单 */
     String SAVE = "" +
         "insert ignore into " +
-        "order_detail(product_id, user_phone, state) " +
-        "values(#{productId}, #{userPhone}, 1)";
+        "seckill_order(id, product_id, user_phone, state) " +
+        "values(#{id}, #{productId}, #{userPhone}, 1)";
 
     /** 根据id查询订单对象 */
     String FIND_BY_ID_AND_PHONE = "" +
-        "select * from order_detail " +
+        "select * from seckill_order " +
         "where product_id = #{productId} " +
         "and user_phone = #{userPhone}";
 
@@ -34,7 +34,8 @@ public interface OrderDetailMapper {
      * @return 保存操作影响的行数, 如果是0代表插入失败
      */
     @Insert(SAVE)
-    int save(@Param("productId") long productId,
+    int save(@Param("id") Long id,
+             @Param("productId") long productId,
              @Param("userPhone") long userPhone);
 
     /**
@@ -46,16 +47,17 @@ public interface OrderDetailMapper {
      */
     @Select(FIND_BY_ID_AND_PHONE)
     @Results(value = {
+        @Result(property = "id", column = "id"),
         @Result(
-            property = "product",
+            property = "productDO",
             column = "product_id",
-            javaType = Product.class,
-            one = @One(select = "com.github.congyh.seckill.dao.ProductMapper.findById")),
+            javaType = ProductDO.class,
+            one = @One(select = "com.github.congyh.seckill.dao.ProductDAO.findById")),
         @Result(property = "userPhone", column = "user_phone"),
         @Result(property = "state", column = "state"),
         @Result(property = "createTime", column = "create_time")
     })
-    OrderDetail findByIdAndPhone(@Param("productId") long productId,
-                                 @Param("userPhone") long userPhone);
+    OrderDetailDO findByIdAndPhone(@Param("productId") long productId,
+                                   @Param("userPhone") long userPhone);
 
 }

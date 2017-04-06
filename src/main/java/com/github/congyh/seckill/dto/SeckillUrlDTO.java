@@ -1,11 +1,11 @@
-package com.github.congyh.seckill.model;
+package com.github.congyh.seckill.dto;
 
 /**
  * 秒杀地址封装类
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class SeckillURL {
+public class SeckillUrlDTO {
 
     private boolean exposed;
     /** 一种加密措施 */
@@ -16,20 +16,20 @@ public class SeckillURL {
     private long start;
     private long end;
 
-    public SeckillURL(boolean exposed, String md5, long productId) {
+    public SeckillUrlDTO(boolean exposed, String md5, long productId) {
         this.exposed = exposed;
         this.md5 = md5;
         this.productId = productId;
     }
 
-    public SeckillURL(boolean exposed, long productId) {
+    public SeckillUrlDTO(boolean exposed, long productId) {
         this.exposed = exposed;
         this.productId = productId;
     }
 
     @Override
     public String toString() {
-        return "SeckillURL{" +
+        return "SeckillUrlDTO{" +
             "exposed=" + exposed +
             ", md5='" + md5 + '\'' +
             ", productId=" + productId +
@@ -39,7 +39,7 @@ public class SeckillURL {
             '}';
     }
 
-    public SeckillURL(boolean exposed, long now, long start, long end) {
+    public SeckillUrlDTO(boolean exposed, long now, long start, long end) {
 
         this.exposed = exposed;
         this.now = now;

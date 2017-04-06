@@ -1,8 +1,8 @@
 package com.github.congyh.seckill.service.impl;
 
-import com.github.congyh.seckill.entity.Product;
-import com.github.congyh.seckill.model.SeckillExecutionResult;
-import com.github.congyh.seckill.model.SeckillURL;
+import com.github.congyh.seckill.domain.ProductDO;
+import com.github.congyh.seckill.dto.SeckillExecutionDTO;
+import com.github.congyh.seckill.dto.SeckillUrlDTO;
 import com.github.congyh.seckill.service.SeckillService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,8 +35,8 @@ public class SeckillServiceImplTest {
 
     @Test
     public void findAll() throws Exception {
-        List<Product> productList = seckillService.findAll();
-        logger.info("list={}", productList);
+        List<ProductDO> productDOList = seckillService.findAll();
+        logger.info("list={}", productDOList);
     }
 
     @Test
@@ -46,16 +46,16 @@ public class SeckillServiceImplTest {
 
     @Test
     public void executeSeckill() throws Exception {
-        SeckillURL seckillURL = seckillService.exposeSeckillUrl(1001);
-        if (seckillURL.isExposed()) {
-            logger.info("SeckillURL={}", seckillURL);
+        SeckillUrlDTO seckillUrlDTO = seckillService.exposeSeckillUrl(1001);
+        if (seckillUrlDTO.isExposed()) {
+            logger.info("SeckillUrlDTO={}", seckillUrlDTO);
 
             // URL地址为类似: 2315285e41247936a4184a3085704469 这样的字符串
             // try catch块是为了保证测试能够重复执行.
             try {
-                SeckillExecutionResult seckillExecutionResult = seckillService
-                    .executeSeckill(1001, 1800000000L, seckillURL.getMd5());
-                logger.info("result={}", seckillExecutionResult);
+                SeckillExecutionDTO seckillExecutionDTO = seckillService
+                    .executeSeckill(1001, 1800000000L, seckillUrlDTO.getMd5());
+                logger.info("result={}", seckillExecutionDTO);
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }
