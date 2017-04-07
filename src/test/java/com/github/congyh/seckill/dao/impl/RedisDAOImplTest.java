@@ -1,7 +1,7 @@
-package com.github.congyh.seckill.cache;
+package com.github.congyh.seckill.dao.impl;
 
-import com.github.congyh.seckill.dao.SeckillProductDAO;
 import com.github.congyh.seckill.dao.RedisDAO;
+import com.github.congyh.seckill.dao.SeckillProductDAO;
 import com.github.congyh.seckill.domain.SeckillProductDO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RedisDAOTest {
+public class RedisDAOImplTest {
     @Autowired
     private RedisDAO redisDAO;
 

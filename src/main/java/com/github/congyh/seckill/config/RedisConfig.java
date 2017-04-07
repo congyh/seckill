@@ -1,6 +1,7 @@
 package com.github.congyh.seckill.config;
 
 import com.github.congyh.seckill.dao.RedisDAO;
+import com.github.congyh.seckill.dao.impl.RedisDAOImpl;
 import com.github.congyh.seckill.properties.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,6 @@ public class RedisConfig {
 
     @Bean
     public RedisDAO initRedisCache(RedisProperties redisProperties) {
-        return new RedisDAO(redisProperties.getIp(), redisProperties.getPort());
+        return new RedisDAOImpl(redisProperties.getIp(), redisProperties.getPort());
     }
 }
