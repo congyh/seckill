@@ -10,6 +10,10 @@ spring:
 #    url: jdbc:mysql://localhost:3306/spring_transaction
     username: root
     password: 1703649
+  output:
+    ansi:
+      # 检测终端是否支持彩色日志输出, 如果支持, 以彩色输出
+      enabled: detect
 #  jpa:
 #    hibernate:
 #      #这是最常用的一种策略, 如果表不存在会根据java程序中定义的Entity自动建表.

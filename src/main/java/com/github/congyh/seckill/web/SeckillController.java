@@ -5,8 +5,8 @@ import com.github.congyh.seckill.dto.Result;
 import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
 import com.github.congyh.seckill.enums.ResultTypeEnum;
+import com.github.congyh.seckill.exception.DomainNotFoundException;
 import com.github.congyh.seckill.service.SeckillService;
-import com.github.congyh.seckill.util.ResultBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,27 +32,34 @@ public class SeckillController {
      * 获取商品列表
      *
      * @return 商品列表页面
+     * @throws DomainNotFoundException 实体未找到
      */
     @GetMapping("/products")
-    public String products(Model model) {
-       List<SeckillProductDO> seckillProductList = seckillService.findAll();
-       model.addAttribute("seckillProductList", seckillProductList);
+    public String products(Model model) throws DomainNotFoundException {
+        List<SeckillProductDO> seckillProductList = seckillService.findAll();
+        if (seckillProductList == null) {
+            throw new DomainNotFoundException();
+        }
+        model.addAttribute("seckillProductList", seckillProductList);
 
-       return "products";
+        return "products";
     }
 
     /**
      * 商品详情页
      *
-     * @param id 商品id
+     * @param id    商品id
      * @param model 商品信息
      * @return 商品详情页地址
+     * @throws DomainNotFoundException 实体未找到
      */
     @GetMapping("/products/{id}")
     public String productDetail(@PathVariable("id") long id,
-                           Model model) {
-        // TODO 这里的product可能是null, 需要进行统一异常处理.
+                                Model model) throws DomainNotFoundException {
         SeckillProductDO seckillProduct = seckillService.findById(id);
+        if (seckillProduct == null) {
+            throw new DomainNotFoundException();
+        }
         model.addAttribute("seckillProduct", seckillProduct);
 
         return "product-detail";
@@ -69,14 +76,14 @@ public class SeckillController {
     @ResponseBody
     public Result<SeckillUrlDTO> seckillUrl(@PathVariable("id") long id) {
         SeckillUrlDTO seckillUrl = seckillService.exposeSeckillUrl(id);
-        return new Result<SeckillUrlDTO>(ResultTypeEnum.);
+        return new Result<>(ResultTypeEnum.OK, seckillUrl);
     }
 
     /**
      * 执行秒杀操作
      *
-     * @param id 秒杀商品id
-     * @param url 秒杀url
+     * @param id        秒杀商品id
+     * @param url       秒杀url
      * @param userPhone 用户手机号
      * @return 秒杀执行结果
      */
@@ -85,10 +92,6 @@ public class SeckillController {
     public Result<SeckillExecutionDTO> seckillUrl(@PathVariable("id") long id,
                                                   @PathVariable("url") String url,
                                                   @CookieValue(value = "userPhone", required = false) long userPhone) {
-        SeckillExecutionDTO seckillExecution
-             = seckillService.executeSeckill(id, userPhone, url);
-        return ResultBuilder.success(seckillExecution);
+        return seckillService.executeSeckill(id, userPhone, url);
     }
-
-
 }

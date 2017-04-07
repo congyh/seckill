@@ -12,7 +12,8 @@ public enum ResultTypeEnum {
     SECKILL_SUCCESS(1, "秒杀成功"),
     SECKILL_END(2, "秒杀结束"),
     SECKILL_REPEAT(3, "重复秒杀"),
-    WRONG_URL(4, "秒杀地址错误");
+    WRONG_URL(4, "秒杀地址错误"),
+    DOMAIN_NOT_FOUND(5, "商品实体未找到");
 
     private int code;
     private String message;

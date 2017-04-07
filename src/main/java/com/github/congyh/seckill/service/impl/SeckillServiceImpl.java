@@ -9,7 +9,6 @@ import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
 import com.github.congyh.seckill.enums.ResultTypeEnum;
 import com.github.congyh.seckill.exception.DAOException;
-import com.github.congyh.seckill.exception.ServiceException;
 import com.github.congyh.seckill.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,16 +45,19 @@ public class SeckillServiceImpl implements SeckillService {
         try {
             return seckillProductDAO.findAll(0, 4);
         } catch (Exception e) {
-            throw new DAOException("findAll()异常", e);
+            throw new DAOException(e);
         }
     }
 
     @Override
     public SeckillProductDO findById(long productId) throws DAOException {
         try {
+            // debug
+            SeckillProductDO seckillProduct = seckillProductDAO.findById(productId);
+            seckillProduct.getId();
             return seckillProductDAO.findById(productId);
         } catch (Exception e) {
-            throw new DAOException("findById(long productId)异常", e);
+            throw new DAOException(e);
         }
     }
 
@@ -66,7 +68,6 @@ public class SeckillServiceImpl implements SeckillService {
             SeckillProductDO seckillProductDO = redisDAO.getProduct(seckillProductId);
             if (seckillProductDO == null) {
                 seckillProductDO = seckillProductDAO.findById(seckillProductId);
-                // TODO 空指针异常最好也统一处理, 比较困难的是如何自动判别空的类型? 还是直接不判断了?
             }
             Date gmtStart = seckillProductDO.getGmtStart();
             Date gmtEnd = seckillProductDO.getGmtEnd();
@@ -79,7 +80,7 @@ public class SeckillServiceImpl implements SeckillService {
             String md5 = toMD5(seckillProductId);
             return new SeckillUrlDTO(seckillProductId, md5);
         } catch (Exception e) {
-            throw new DAOException("exposeSeckillUrl(long seckillProductId)异常", e);
+            throw new DAOException(e);
         }
     }
 
@@ -126,10 +127,10 @@ public class SeckillServiceImpl implements SeckillService {
                 return new Result<>(ResultTypeEnum.SECKILL_END);
             }
         } catch (Exception e) {
-            throw new DAOException("executeSeckill(long seckillProductId, long userPhone, String md5)异常", e);
+            throw new DAOException(e);
         }
 
-        SeckillExecutionDTO seckillExecutionDTO = new SeckillExecutionDTO(seckillProductId, userPhone);
-        return new Result<>(ResultTypeEnum.SECKILL_SUCCESS, seckillExecutionDTO);
+        SeckillExecutionDTO seckillExecution = new SeckillExecutionDTO(seckillProductId, userPhone);
+        return new Result<>(ResultTypeEnum.SECKILL_SUCCESS, seckillExecution);
     }
 }

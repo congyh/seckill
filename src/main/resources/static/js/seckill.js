@@ -68,11 +68,11 @@ var seckill = {
         },
 
         // 倒计时函数
-        countdown: function (seckillProductId, nowTime, gmtStart, gmtEnd) {
+        countdown: function (seckillProductId, gmtNow, gmtStart, gmtEnd) {
             var countdownMessage = $('#countdown-message');
-            if (nowTime.getTime() > gmtEnd) {
+            if (gmtNow.getTime() > gmtEnd) {
                 countdownMessage.html("秒杀结束, 感谢关注!");
-            } else if (nowTime.getTime() < gmtStart) {
+            } else if (gmtNow.getTime() < gmtStart) {
                 // 这里实际上是对countdownMessage这个元素进行了事件绑定,
                 // countdown函数接收一个时间, 然后每隔1s执行一次回调函数,
                 // 回调函数接收的参数就是前面传入的时间.
@@ -80,16 +80,14 @@ var seckill = {
                     var countdownTime = event.strftime('秒杀倒计时: %D天 %H时 %M分 %S秒');
                     countdownMessage.html(countdownTime);
                 }).on('finish.countdown', function () {
-                    // TODO 如果countdown结束, 那么执行秒杀, 这个函数还没有写.
-                    seckill.executeSeckill(seckillProductId, countdownMessage);
+                    seckill.executeSeckill(seckillProductId, countdownMessage, gmtNow, gmtStart, gmtEnd);
                 });
             } else {
-                seckill.executeSeckill(seckillProductId, countdownMessage);
-
+                seckill.executeSeckill(seckillProductId, countdownMessage, gmtNow, gmtStart, gmtEnd);
             }
         },
 
-        executeSeckill: function (seckillProductId, domNode) {
+        executeSeckill: function (seckillProductId, domNode, gmtNow, gmtStart, gmtEnd) {
             // 拼接后先隐藏起来, 因为现在还不确定秒杀是否开启
             domNode.hide()
                 .html('<button class="btn btn-primary btn-lg" id="seckillBtn">' +
@@ -98,8 +96,7 @@ var seckill = {
             $.get(seckill.URL.seckillUrl(seckillProductId), function (result) {
                 if (result) {
                     var seckillUrl = result['data'];
-                    if (seckillUrl['exposed']) {
-                        // TODO 开启秒杀
+                    if (seckillUrl) {
                         var md5 = seckillUrl['md5'];
                         var encryptedUrl = seckill.URL.encryptedSeckillUrl(seckillProductId, md5);
                         console.log(encryptedUrl);
@@ -107,22 +104,19 @@ var seckill = {
                         $('#seckillBtn').one('click', function () {
                             // $(this)代表选择当前对象, 这句话的意思是点击后立即变为不可点击.
                             $(this).addClass('disabled');
-                            // TODO 写到这里了
                             // 下一步要完成的操作是用ajax异步发送秒杀请求. 并展示执行结果
                             $.get(encryptedUrl, function (result) {
-                                var seckillExecutionResult = result['data'];
-                                var statusInfo = seckillExecutionResult['statusInfo'];
                                 domNode.html('<span class="label label-success">'
-                                    + statusInfo
+                                    + result['message']
                                     + '</span>');
                             });
                         })
                     } else {
                         // 注意: 走到这个分支是由于客户端和服务器的计时差异导致的
-                        var now = seckillUrl['now'];
-                        var start = seckillUrl['start'];
-                        var end = seckillUrl['end'];
-                        seckill.countdown(seckillProductId, now, start, end);
+                        // var now = seckillUrl['now'];
+                        // var start = seckillUrl['start'];
+                        // var end = seckillUrl['end'];
+                        seckill.countdown(seckillProductId, gmtNow, gmtStart, gmtEnd);
                     }
                 }
             });

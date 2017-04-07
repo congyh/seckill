@@ -1,6 +1,7 @@
 package com.github.congyh.seckill.service.impl;
 
 import com.github.congyh.seckill.domain.SeckillProductDO;
+import com.github.congyh.seckill.dto.Result;
 import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
 import com.github.congyh.seckill.service.SeckillService;
@@ -41,25 +42,24 @@ public class SeckillServiceImplTest {
 
     @Test
     public void findById() throws Exception {
-        logger.info("seckill={}", seckillService.findById(1001));
+        logger.info("seckill={}", seckillService.findById(1005));
     }
 
     @Test
     public void executeSeckill() throws Exception {
         SeckillUrlDTO seckillUrlDTO = seckillService.exposeSeckillUrl(1001);
-        if (seckillUrlDTO.isExposed()) {
+        if (seckillUrlDTO != null) {
             logger.info("SeckillUrlDTO={}", seckillUrlDTO);
 
             // URL地址为类似: 2315285e41247936a4184a3085704469 这样的字符串
             // try catch块是为了保证测试能够重复执行.
             try {
-                SeckillExecutionDTO seckillExecutionDTO = seckillService
+                Result<SeckillExecutionDTO> result = seckillService
                     .executeSeckill(1001, 1800000000L, seckillUrlDTO.getMd5());
-                logger.info("result={}", seckillExecutionDTO);
+                logger.info("result={}", result.getData());
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }
-
         } else {
             logger.warn("秒杀未开启!");
         }

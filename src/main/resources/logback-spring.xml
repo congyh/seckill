@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml" />-->
+    <!--定义一系列属性名, 还可以从file中批量加载-->
+    <property name="log.path" value="logback.log" />
+
+    <!--定义一个appender, 向控制台输出日志-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--过滤向控制台发出的ERROR及以上级别的日志输出-->
+        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+            <!--<level>ERROR</level>-->
+        <!--</filter>-->
+        <!--控制台日志显示格式-->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!--定义一个appender, 向文件输出日志-->
+    <appender name="file"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--输出路径-->
+        <file>${log.path}</file>
+        <!--定义日志回滚类型和规则, 默认是每天打包一次-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+        </rollingPolicy>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!--定义默认日志输出级别, 添加appender-->
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+
+    <!--自定义额外的包输出级别, 将会覆盖默认的日志输出级别-->
+    <!--<logger name="com.example.logback" level="warn" />-->
+
+</configuration>
