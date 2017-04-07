@@ -1,6 +1,7 @@
 package com.github.congyh.seckill.service;
 
 import com.github.congyh.seckill.domain.SeckillProductDO;
+import com.github.congyh.seckill.dto.Result;
 import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
 import com.github.congyh.seckill.exception.ServiceException;
@@ -34,11 +35,11 @@ public interface SeckillService {
     /**
      * 执行秒杀
      *
-     * @param productId 商品id
+     * @param seckillProductId 商品id
      * @param userPhone 用户手机号
      * @param md5 加密后的秒杀地址, 用于验证秒杀请求是否合法
      * @throws ServiceException 秒杀服务异常
      */
-    SeckillExecutionDTO executeSeckill(long productId, long userPhone, String md5)
-        throws ServiceException;
+    public Result<SeckillExecutionDTO> executeSeckill(long seckillProductId, long userPhone, String md5)
+        throws DAOException, ServiceException;
 }

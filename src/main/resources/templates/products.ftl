@@ -23,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <#list seckillProductDOList as item>
+                <#list seckillProductList as item>
                 <tr>
                     <td>${item.name}</td>
                     <td>${item.number}</td>

@@ -4,8 +4,9 @@ import com.github.congyh.seckill.domain.SeckillProductDO;
 import com.github.congyh.seckill.dto.Result;
 import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
+import com.github.congyh.seckill.enums.ResultTypeEnum;
 import com.github.congyh.seckill.service.SeckillService;
-import com.github.congyh.seckill.util.ResultUtils;
+import com.github.congyh.seckill.util.ResultBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class SeckillController {
      */
     @GetMapping("/products")
     public String products(Model model) {
-       List<SeckillProductDO> seckillProductDOList = seckillService.findAll();
-       model.addAttribute("seckillProductDOList", seckillProductDOList);
+       List<SeckillProductDO> seckillProductList = seckillService.findAll();
+       model.addAttribute("seckillProductList", seckillProductList);
 
        return "products";
     }
@@ -51,8 +52,8 @@ public class SeckillController {
     public String productDetail(@PathVariable("id") long id,
                            Model model) {
         // TODO 这里的product可能是null, 需要进行统一异常处理.
-        SeckillProductDO seckillProductDO = seckillService.findById(id);
-        model.addAttribute("seckillProductDO", seckillProductDO);
+        SeckillProductDO seckillProduct = seckillService.findById(id);
+        model.addAttribute("seckillProduct", seckillProduct);
 
         return "product-detail";
     }
@@ -67,8 +68,8 @@ public class SeckillController {
     @GetMapping("/products/{id}/seckillUrl")
     @ResponseBody
     public Result<SeckillUrlDTO> seckillUrl(@PathVariable("id") long id) {
-        SeckillUrlDTO seckillUrlDTO = seckillService.exposeSeckillUrl(id);
-        return ResultUtils.success(seckillUrlDTO);
+        SeckillUrlDTO seckillUrl = seckillService.exposeSeckillUrl(id);
+        return new Result<SeckillUrlDTO>(ResultTypeEnum.);
     }
 
     /**
@@ -84,9 +85,9 @@ public class SeckillController {
     public Result<SeckillExecutionDTO> seckillUrl(@PathVariable("id") long id,
                                                   @PathVariable("url") String url,
                                                   @CookieValue(value = "userPhone", required = false) long userPhone) {
-        SeckillExecutionDTO seckillExecutionDTO
+        SeckillExecutionDTO seckillExecution
              = seckillService.executeSeckill(id, userPhone, url);
-        return ResultUtils.success(seckillExecutionDTO);
+        return ResultBuilder.success(seckillExecution);
     }
 
 

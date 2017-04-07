@@ -19,7 +19,7 @@ public class ExceptionAdvice {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
 
     /**
-     * 统一处理SeckillException类型
+     * 统一处理类型
      *
      * <p>TODO 后期异常类型增多的时候, 可以拆分此方法</p>
      *
@@ -28,11 +28,12 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler(value = ServiceException.class)
     @ResponseBody
-    public Result handleSeckillException(ServiceException e) {
-        logger.error("[秒杀异常] {} ", e);
-//        return ResultUtils.
-        // TODO 待实现.
+    public Result handleServiceException(ServiceException e) {
+        logger.error("[Service层异常] {} ", e);
+        // TODO 未完成
         return null;
+//        return new Re
     }
+
 
 }

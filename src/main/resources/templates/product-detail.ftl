@@ -9,7 +9,7 @@
 <div class="container">
     <div class="panel text-center">
         <div class="panel-heading">
-            <h2>${seckillProductDO.name}</h2>
+            <h2>${seckillProduct.name}</h2>
         </div>
         <div class="panel-body">
             <h2 class="text-danger">
@@ -63,9 +63,9 @@
     $(function () {
         // 这里参数传入的是一个对象
         seckill.detail.init({
-            productId: ${seckillProductDO.id?c},
-            gmtStart: '${seckillProductDO.gmtStart?long?c}',
-            gmtEnd: '${seckillProductDO.gmtEnd?long?c}'
+            seckillProductId: ${seckillProduct.id?c},
+            gmtStart: '${seckillProduct.gmtStart?long?c}',
+            gmtEnd: '${seckillProduct.gmtEnd?long?c}'
         })
     });
 </script>

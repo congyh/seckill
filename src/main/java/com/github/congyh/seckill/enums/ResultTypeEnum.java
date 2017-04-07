@@ -7,7 +7,12 @@ package com.github.congyh.seckill.enums;
  */
 public enum ResultTypeEnum {
 
-    SUCEESS(0, "OK"), ERROR(-1, "ERROR");
+    UNKNOWN_ERROR(-1, "未知错误"),
+    OK(0, "OK"),
+    SECKILL_SUCCESS(1, "秒杀成功"),
+    SECKILL_END(2, "秒杀结束"),
+    SECKILL_REPEAT(3, "重复秒杀"),
+    WRONG_URL(4, "秒杀地址错误");
 
     private int code;
     private String message;

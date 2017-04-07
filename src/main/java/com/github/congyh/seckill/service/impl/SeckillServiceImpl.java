@@ -1,12 +1,14 @@
 package com.github.congyh.seckill.service.impl;
 
-import com.github.congyh.seckill.dao.SeckillProductDAO;
 import com.github.congyh.seckill.dao.RedisDAO;
 import com.github.congyh.seckill.dao.SeckillOrderDAO;
+import com.github.congyh.seckill.dao.SeckillProductDAO;
 import com.github.congyh.seckill.domain.SeckillProductDO;
+import com.github.congyh.seckill.dto.Result;
 import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
-import com.github.congyh.seckill.enums.SeckillExecutionStatusEnum;
+import com.github.congyh.seckill.enums.ResultTypeEnum;
+import com.github.congyh.seckill.exception.DAOException;
 import com.github.congyh.seckill.exception.ServiceException;
 import com.github.congyh.seckill.service.SeckillService;
 import org.slf4j.Logger;
@@ -40,44 +42,55 @@ public class SeckillServiceImpl implements SeckillService {
     private RedisDAO redisDAO;
 
     @Override
-    public List<SeckillProductDO> findAll() {
-        return seckillProductDAO.findAll(0, 4);
+    public List<SeckillProductDO> findAll() throws DAOException {
+        try {
+            return seckillProductDAO.findAll(0, 4);
+        } catch (Exception e) {
+            throw new DAOException("findAll()异常", e);
+        }
     }
 
     @Override
-    public SeckillProductDO findById(long productId) {
-        return seckillProductDAO.findById(productId);
+    public SeckillProductDO findById(long productId) throws DAOException {
+        try {
+            return seckillProductDAO.findById(productId);
+        } catch (Exception e) {
+            throw new DAOException("findById(long productId)异常", e);
+        }
     }
 
     @Override
-    public SeckillUrlDTO exposeSeckillUrl(long productId) {
-        // TODO 缓存最后要以横切的方式实现
-        SeckillProductDO seckillProductDO = redisDAO.getProduct(productId);
-        if (seckillProductDO == null) {
-            seckillProductDO = seckillProductDAO.findById(productId);
-            // TODO 空指针异常最好也统一处理, 比较困难的是如何自动判别空的类型? 还是直接不判断了?
+    public SeckillUrlDTO exposeSeckillUrl(long seckillProductId) throws DAOException {
+        try {
+            // TODO 缓存最后要以横切的方式实现
+            SeckillProductDO seckillProductDO = redisDAO.getProduct(seckillProductId);
+            if (seckillProductDO == null) {
+                seckillProductDO = seckillProductDAO.findById(seckillProductId);
+                // TODO 空指针异常最好也统一处理, 比较困难的是如何自动判别空的类型? 还是直接不判断了?
+            }
+            Date gmtStart = seckillProductDO.getGmtStart();
+            Date gmtEnd = seckillProductDO.getGmtEnd();
+            // 首先需要判断秒杀是否开启, 如果没有开启输出服务器时间和秒杀时间范围
+            Date gmtNow = new Date();
+            if (gmtNow.getTime() < gmtStart.getTime()
+                || gmtNow.getTime() > gmtEnd.getTime()) {
+                return null;
+            }
+            String md5 = toMD5(seckillProductId);
+            return new SeckillUrlDTO(seckillProductId, md5);
+        } catch (Exception e) {
+            throw new DAOException("exposeSeckillUrl(long seckillProductId)异常", e);
         }
-
-        Date startTime = seckillProductDO.getGmtStart();
-        Date endTime = seckillProductDO.getGmtEnd();
-        // 首先需要判断秒杀是否开启, 如果没有开启输出服务器时间和秒杀时间范围
-        Date now = new Date();
-        if (now.getTime() < startTime.getTime()
-            || now.getTime() > endTime.getTime()) {
-            return new SeckillUrlDTO(false, now.getTime(), startTime.getTime(), endTime.getTime());
-        }
-        String seckillURL = toMD5(productId);
-        return new SeckillUrlDTO(true, seckillURL, productId);
     }
 
     /**
      * 根据传入的秒杀商品生成md5加密后的秒杀地址
      *
-     * @param productId 秒杀商品id
+     * @param seckillProductId 秒杀商品id
      * @return md5加密后的秒杀地址
      */
-    private String toMD5(long productId) {
-        String base = productId + "/" + SALT;
+    private String toMD5(long seckillProductId) {
+        String base = seckillProductId + "/" + SALT;
         return DigestUtils.md5DigestAsHex(base.getBytes());
     }
 
@@ -92,27 +105,31 @@ public class SeckillServiceImpl implements SeckillService {
      * 3. 真正的rowLock发生地, 减库存操作.
      * </pre>
      *
-     * @param productId 商品id
+     * @param seckillProductId 商品id
      * @param userPhone 用户手机号
      * @param md5 加密后的秒杀地址, 用于验证秒杀请求是否合法
      * @return 秒杀结果
-     * @throws ServiceException 秒杀异常
      */
     @Override
     @Transactional
-    public SeckillExecutionDTO executeSeckill(long productId, long userPhone, String md5)
-        throws ServiceException {
+    public Result<SeckillExecutionDTO> executeSeckill(long seckillProductId, long userPhone, String md5)
+        throws DAOException {
 
-        if (md5 == null || !md5.equals(toMD5(productId))) {
-            throw new ServiceException("秒杀地址错误!");
+        if (md5 == null || !md5.equals(toMD5(seckillProductId))) {
+            return new Result<>(ResultTypeEnum.WRONG_URL);
         }
-        if (seckillOrderDAO.save(productId, userPhone) == 0) {
-            throw new ServiceException("您已成功秒杀, 无法重复秒杀!");
-        }
-        if (seckillProductDAO.reduceNumber(productId, new Date()) == 0) {
-            throw new ServiceException("该商品的秒杀已经结束!");
+        try {
+            if (seckillOrderDAO.save(seckillProductId, userPhone) == 0) {
+                return new Result<>(ResultTypeEnum.SECKILL_REPEAT);
+            }
+            if (seckillProductDAO.reduceNumber(seckillProductId, new Date()) == 0) {
+                return new Result<>(ResultTypeEnum.SECKILL_END);
+            }
+        } catch (Exception e) {
+            throw new DAOException("executeSeckill(long seckillProductId, long userPhone, String md5)异常", e);
         }
 
-        return new SeckillExecutionDTO(productId, userPhone, SeckillExecutionStatusEnum.SUCCESS);
+        SeckillExecutionDTO seckillExecutionDTO = new SeckillExecutionDTO(seckillProductId, userPhone);
+        return new Result<>(ResultTypeEnum.SECKILL_SUCCESS, seckillExecutionDTO);
     }
 }

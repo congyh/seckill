@@ -51,16 +51,16 @@ var seckill = {
                 }
 
                 // 如果手机号已经填写, 则继续以下逻辑
-                var startTime = params['gmtStart'];
-                var endTime = params['gmtEnd'];
-                var productId = params['productId'];
-                seckill.countdown(productId, new Date(), startTime, endTime);
+                var gmtStart = params['gmtStart'];
+                var gmtEnd = params['gmtEnd'];
+                var seckillProductId = params['seckillProductId'];
+                seckill.countdown(seckillProductId, new Date(), gmtStart, gmtEnd);
             }
         },
 
         // 验证手机号
-        validatePhone: function (phone) {
-            if (phone && phone.length == 11 && !isNaN(phone)) {
+        validatePhone: function (userPhone) {
+            if (userPhone && userPhone.length == 11 && !isNaN(userPhone)) {
                 return true;
             } else {
                 return false;
@@ -68,7 +68,7 @@ var seckill = {
         },
 
         // 倒计时函数
-        countdown: function (productId, nowTime, gmtStart, gmtEnd) {
+        countdown: function (seckillProductId, nowTime, gmtStart, gmtEnd) {
             var countdownMessage = $('#countdown-message');
             if (nowTime.getTime() > gmtEnd) {
                 countdownMessage.html("秒杀结束, 感谢关注!");
@@ -81,27 +81,27 @@ var seckill = {
                     countdownMessage.html(countdownTime);
                 }).on('finish.countdown', function () {
                     // TODO 如果countdown结束, 那么执行秒杀, 这个函数还没有写.
-                    seckill.executeSeckill(productId, countdownMessage);
+                    seckill.executeSeckill(seckillProductId, countdownMessage);
                 });
             } else {
-                seckill.executeSeckill(productId, countdownMessage);
+                seckill.executeSeckill(seckillProductId, countdownMessage);
 
             }
         },
 
-        executeSeckill: function (productId, domNode) {
+        executeSeckill: function (seckillProductId, domNode) {
             // 拼接后先隐藏起来, 因为现在还不确定秒杀是否开启
             domNode.hide()
                 .html('<button class="btn btn-primary btn-lg" id="seckillBtn">' +
                     '开始秒杀' +
                     '</button>');
-            $.get(seckill.URL.seckillUrl(productId), function (result) {
+            $.get(seckill.URL.seckillUrl(seckillProductId), function (result) {
                 if (result) {
                     var seckillUrl = result['data'];
                     if (seckillUrl['exposed']) {
                         // TODO 开启秒杀
                         var md5 = seckillUrl['md5'];
-                        var encryptedUrl = seckill.URL.encryptedSeckillUrl(productId, md5);
+                        var encryptedUrl = seckill.URL.encryptedSeckillUrl(seckillProductId, md5);
                         console.log(encryptedUrl);
                         // 绑定事件仅触发一次, 且为click事件
                         $('#seckillBtn').one('click', function () {
@@ -122,7 +122,7 @@ var seckill = {
                         var now = seckillUrl['now'];
                         var start = seckillUrl['start'];
                         var end = seckillUrl['end'];
-                        seckill.countdown(productId, now, start, end);
+                        seckill.countdown(seckillProductId, now, start, end);
                     }
                 }
             });
