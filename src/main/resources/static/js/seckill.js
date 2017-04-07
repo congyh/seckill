@@ -51,9 +51,9 @@ var seckill = {
                 }
 
                 // 如果手机号已经填写, 则继续以下逻辑
-                var startTime = params.startTime;
-                var endTime = params.endTime;
-                var productId = params.productId;
+                var startTime = params['gmtStart'];
+                var endTime = params['gmtEnd'];
+                var productId = params['productId'];
                 seckill.countdown(productId, new Date(), startTime, endTime);
             }
         },
@@ -68,15 +68,15 @@ var seckill = {
         },
 
         // 倒计时函数
-        countdown: function (productId, nowTime, startTime, endTime) {
+        countdown: function (productId, nowTime, gmtStart, gmtEnd) {
             var countdownMessage = $('#countdown-message');
-            if (nowTime.getTime() > endTime) {
+            if (nowTime.getTime() > gmtEnd) {
                 countdownMessage.html("秒杀结束, 感谢关注!");
-            } else if (nowTime.getTime() < startTime) {
+            } else if (nowTime.getTime() < gmtStart) {
                 // 这里实际上是对countdownMessage这个元素进行了事件绑定,
                 // countdown函数接收一个时间, 然后每隔1s执行一次回调函数,
                 // 回调函数接收的参数就是前面传入的时间.
-                countdownMessage.countdown(startTime, function (event) {
+                countdownMessage.countdown(gmtStart, function (event) {
                     var countdownTime = event.strftime('秒杀倒计时: %D天 %H时 %M分 %S秒');
                     countdownMessage.html(countdownTime);
                 }).on('finish.countdown', function () {

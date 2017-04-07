@@ -8,17 +8,17 @@ package com.github.congyh.seckill.dto;
 public class Result<T> {
 
     /** 错误码 */
-    public int code;
+    public Integer code;
     /** 提示信息 */
     private String msg;
     /** 返回数据 */
     private T data;
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

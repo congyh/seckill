@@ -20,7 +20,9 @@ spring:
 #    port: 6379
 #    password: secret
 mybatis:
+  # 实体路径名, 定义后在xml mapper文件中直接用相对路径即可
   type-aliases-package: com.github.congyh.domain
+  # xml mapper文件路径
   mapper-locations: classpath:mapper/*.xml
   configuration:
     # 使用数据库自增主键策略

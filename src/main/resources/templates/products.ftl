@@ -19,7 +19,6 @@
                     <th>库存</th>
                     <th>开始时间</th>
                     <th>结束时间</th>
-                    <th>创建时间</th>
                     <th>详情页</th>
                 </tr>
                 </thead>
@@ -29,10 +28,9 @@
                     <td>${item.name}</td>
                     <td>${item.number}</td>
                     <td>${item.gmtStart?datetime}</td>
-                    <td>${item.endTime?datetime}</td>
-                    <td>${item.gmtCreate?datetime}</td>
+                    <td>${item.gmtEnd?datetime}</td>
                     <td>
-                        <a class="btn btn-info" href="/seckill/products/${item.id?replace(',' ,'')}" target="_blank">link</a>
+                        <a class="btn btn-info" href="/seckill/products/${item.id?c}" target="_blank">link</a>
                     </td>
                 </tr>
                 </#list>

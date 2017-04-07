@@ -5,24 +5,24 @@ package com.github.congyh.seckill.enums;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public enum ResultStatusEnum {
+public enum ResultTypeEnum {
 
     SUCEESS(0, "OK"), ERROR(-1, "ERROR");
 
-    private int coce;
+    private int code;
     private String message;
 
-    ResultStatusEnum(int coce, String message) {
-        this.coce = coce;
+    ResultTypeEnum(int code, String message) {
+        this.code = code;
         this.message = message;
     }
 
-    public int getCoce() {
-        return coce;
+    public int getCode() {
+        return code;
     }
 
-    public void setCoce(int coce) {
-        this.coce = coce;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getMessage() {
@@ -39,10 +39,10 @@ public enum ResultStatusEnum {
      * @param code code
      * @return 枚举对象
      */
-    public static ResultStatusEnum codeOf(int code) {
-        for (ResultStatusEnum resultStatusEnum : values()) {
-            if (resultStatusEnum.getCoce() == code) {
-                return resultStatusEnum;
+    public static ResultTypeEnum codeOf(int code) {
+        for (ResultTypeEnum resultTypeEnum : values()) {
+            if (resultTypeEnum.getCode() == code) {
+                return resultTypeEnum;
             }
         }
 

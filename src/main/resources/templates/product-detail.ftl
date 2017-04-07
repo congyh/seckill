@@ -65,7 +65,7 @@
         seckill.detail.init({
             productId: ${seckillProductDO.id?c},
             gmtStart: '${seckillProductDO.gmtStart?long?c}',
-            endTime: '${seckillProductDO.endTime?long?c}'
+            gmtEnd: '${seckillProductDO.gmtEnd?long?c}'
         })
     });
 </script>

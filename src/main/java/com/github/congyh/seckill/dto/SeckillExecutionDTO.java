@@ -5,17 +5,18 @@ import com.github.congyh.seckill.enums.SeckillExecutionStatusEnum;
 /**
  * 秒杀操作结果封装类
  *
+ * // TODO 这个类还需要进行type migration
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
 public class SeckillExecutionDTO {
 
-    private long productId;
-    private long userPhone;
+    private Long productId;
+    private Long userPhone;
 
     // TODO 能够将下面两个字段封装为枚举
     // 现在这样写是因为用枚举的话传输可能会有问题.
     /** 秒杀结果执行状态 */
-    private int status;
+    private Integer status;
     private String statusInfo;
 
     public SeckillExecutionDTO(long productId,
@@ -50,19 +51,27 @@ public class SeckillExecutionDTO {
             '}';
     }
 
-    public long getSeckillId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setSeckillId(long productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
-    public int getStatus() {
+    public Long getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(Long userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -72,13 +81,5 @@ public class SeckillExecutionDTO {
 
     public void setStatusInfo(String statusInfo) {
         this.statusInfo = statusInfo;
-    }
-
-    public long getUserPhone() {
-        return userPhone;
-    }
-
-    public void setUserPhone(long userPhone) {
-        this.userPhone = userPhone;
     }
 }

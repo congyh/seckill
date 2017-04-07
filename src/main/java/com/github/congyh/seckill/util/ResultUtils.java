@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.util;
 
-import com.github.congyh.seckill.enums.ResultStatusEnum;
+import com.github.congyh.seckill.enums.ResultTypeEnum;
 import com.github.congyh.seckill.dto.Result;
 
 /**
@@ -19,14 +19,14 @@ public final class ResultUtils {
      */
     public static <T> Result<T> success(T data) {
         Result<T> result = new Result<T>();
-        result.setCode(ResultStatusEnum.SUCEESS.getCoce());
+        result.setCode(ResultTypeEnum.SUCEESS.getCode());
         result.setData(data);
-        result.setMsg(ResultStatusEnum.SUCEESS.getMessage());
+        result.setMsg(ResultTypeEnum.SUCEESS.getMessage());
 
         return result;
     }
 
-    public static Result withCode(ResultStatusEnum code) {
+    public static Result withCode(ResultTypeEnum code) {
         // TODO 还没有实现
         return null;
     }

@@ -54,7 +54,7 @@ public class SeckillController {
         SeckillProductDO seckillProductDO = seckillService.findById(id);
         model.addAttribute("seckillProductDO", seckillProductDO);
 
-        return "seckillProductDO-detail";
+        return "product-detail";
     }
 
 
