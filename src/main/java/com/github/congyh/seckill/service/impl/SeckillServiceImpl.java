@@ -59,7 +59,7 @@ public class SeckillServiceImpl implements SeckillService {
         }
 
         Date startTime = seckillProductDO.getGmtStart();
-        Date endTime = seckillProductDO.getEndTime();
+        Date endTime = seckillProductDO.getGmtEnd();
         // 首先需要判断秒杀是否开启, 如果没有开启输出服务器时间和秒杀时间范围
         Date now = new Date();
         if (now.getTime() < startTime.getTime()
@@ -106,7 +106,7 @@ public class SeckillServiceImpl implements SeckillService {
         if (md5 == null || !md5.equals(toMD5(productId))) {
             throw new ServiceException("秒杀地址错误!");
         }
-        if (seckillOrderDAO.save(null, productId, userPhone) == 0) {
+        if (seckillOrderDAO.save(productId, userPhone) == 0) {
             throw new ServiceException("您已成功秒杀, 无法重复秒杀!");
         }
         if (seckillProductDAO.reduceNumber(productId, new Date()) == 0) {

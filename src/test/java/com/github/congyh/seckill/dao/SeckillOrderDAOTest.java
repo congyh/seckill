@@ -19,7 +19,7 @@ public class SeckillOrderDAOTest {
 
     @Test
     public void save() throws Exception {
-        int saveStatus = seckillOrderDAO.save(null, 1000, 18823423441L);
+        int saveStatus = seckillOrderDAO.save(1000, 18823423444L);
         System.out.println("影响了几行: " + saveStatus + " 行");
     }
 

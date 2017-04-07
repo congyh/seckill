@@ -3,8 +3,6 @@ package com.github.congyh.seckill.dao;
 import com.github.congyh.seckill.domain.SeckillProductDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.Date;
 import java.util.List;
@@ -14,26 +12,6 @@ import java.util.List;
  */
 @Mapper
 public interface SeckillProductDAO {
-    /** 减库存 */
-    // TODO modifiedTime
-    String REDUCE_NUMBER = "" +
-        "update seckill_product " +
-        "set number = number - 1 " +
-        "where id = #{id} " +
-        "and gmt_start <= #{gmtKill} " +
-        "and gmt_end >= #{gmtKill} " +
-        "and number > 0";
-
-    /** 查询库存*/
-    String FIND_BY_ID = "" +
-        "select * from seckill_product " +
-        "where id = #{id}";
-
-    /** 查询全部库存 */
-    String FIND_ALL = "" +
-        "select * from seckill_product " +
-        "order by gmt_create desc " +
-        "limit #{offset}, #{limit}";
 
     /**
      * 减库存
@@ -42,7 +20,6 @@ public interface SeckillProductDAO {
      * @param gmtKill 秒杀时间
      * @return 更新语句影响的行数, 如果是0的话, 说明没有执行成功.
      */
-    @Update(REDUCE_NUMBER)
     int reduceNumber(@Param("id") long id,
                      @Param("gmtKill") Date gmtKill);
 
@@ -52,7 +29,6 @@ public interface SeckillProductDAO {
      * @param id 秒杀商品id
      * @return 单个商品详情
      */
-    @Select(FIND_BY_ID)
     SeckillProductDO findById(@Param("id") long id);
 
     /**
@@ -62,7 +38,6 @@ public interface SeckillProductDAO {
      * @param limit 结果行数
      * @return 秒杀商品列表
      */
-    @Select(FIND_ALL)
     List<SeckillProductDO> findAll(@Param("offset") int offset,
                                    @Param("limit") int limit);
 }

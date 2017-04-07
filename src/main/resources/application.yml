@@ -20,6 +20,8 @@ spring:
 #    port: 6379
 #    password: secret
 mybatis:
+  type-aliases-package: com.github.congyh.domain
+  mapper-locations: classpath:mapper/*.xml
   configuration:
     # 使用数据库自增主键策略
     use-generated-keys: true
