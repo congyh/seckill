@@ -14,15 +14,16 @@ import org.apache.ibatis.annotations.*;
 public interface SeckillOrderDAO {
 
     /** 秒杀成功, 生成订单 */
+    // TODO modifiedtime
     String SAVE = "" +
         "insert ignore into " +
         "seckill_order(id, seckill_product_id, user_phone, order_status) " +
-        "values(#{id}, #{seckillProductDOId}, #{userPhone}, 1)";
+        "values(#{id}, #{seckillProductId}, #{userPhone}, 0)";
 
     /** 根据id查询订单对象 */
     String FIND_BY_ID_AND_PHONE = "" +
         "select * from seckill_order " +
-        "where seckill_product_id = #{seckillProductDOId} " +
+        "where seckill_product_id = #{seckillProductId} " +
         "and user_phone = #{userPhone}";
 
     /**
@@ -32,19 +33,19 @@ public interface SeckillOrderDAO {
      * 使用insert ignore操作的时候, 即使是没有插入进去, 也会成功返回,
      * 不会报sql错误, 会返回0, 我们就知道没有操作成功, 便于我们后期的操作</p>
      *
-     * @param seckillProductDOId 秒杀商品id
+     * @param seckillProductId 秒杀商品id
      * @param userPhone 用户手机号
      * @return 保存操作影响的行数, 如果是0代表插入失败
      */
     @Insert(SAVE)
     int save(@Param("id") Long id,
-             @Param("seckillProductDOId") long seckillProductDOId,
+             @Param("seckillProductId") long seckillProductId,
              @Param("userPhone") long userPhone);
 
     /**
      * 根据id查询Order对象
      *
-     * @param seckillProductDOId 秒杀商品id
+     * @param seckillProductId 秒杀商品id
      * @param userPhone 用户手机号
      * @return 唯一的秒杀订单
      */
@@ -62,12 +63,12 @@ public interface SeckillOrderDAO {
 //    })
     @Select(FIND_BY_ID_AND_PHONE)
     @Results(value = {
-        @Result(property = "seckillProductDOId", column = "seckill_product_id"),
+        @Result(property = "seckillProductId", column = "seckill_product_id"),
         @Result(property = "userPhone", column = "user_phone"),
         @Result(property = "orderStatus", column = "order_status"),
         @Result(property = "createTime", column = "create_time")
     })
-    SeckillOrderDO findByIdAndPhone(@Param("seckillProductDOId") long seckillProductDOId,
+    SeckillOrderDO findByIdAndPhone(@Param("seckillProductDOId") long seckillProductId,
                                     @Param("userPhone") long userPhone);
 
 }

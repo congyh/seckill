@@ -28,9 +28,9 @@
                 <tr>
                     <td>${item.name}</td>
                     <td>${item.number}</td>
-                    <td>${item.startTime?datetime}</td>
+                    <td>${item.gmtStart?datetime}</td>
                     <td>${item.endTime?datetime}</td>
-                    <td>${item.createTime?datetime}</td>
+                    <td>${item.gmtCreate?datetime}</td>
                     <td>
                         <a class="btn btn-info" href="/seckill/products/${item.id?replace(',' ,'')}" target="_blank">link</a>
                     </td>

@@ -58,7 +58,7 @@ public class SeckillServiceImpl implements SeckillService {
             // TODO 空指针异常最好也统一处理, 比较困难的是如何自动判别空的类型? 还是直接不判断了?
         }
 
-        Date startTime = seckillProductDO.getStartTime();
+        Date startTime = seckillProductDO.getGmtStart();
         Date endTime = seckillProductDO.getEndTime();
         // 首先需要判断秒杀是否开启, 如果没有开启输出服务器时间和秒杀时间范围
         Date now = new Date();

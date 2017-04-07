@@ -25,7 +25,7 @@ mybatis:
     use-generated-keys: true
     # 允许为列设置别名, 例如select name as title ...
     use-column-label: true
-    # 开启驼峰命名转换, 例如Table(create_time) 到 Entity(createTime)
+    # 开启驼峰命名转换, 例如Table(create_time) 到 Entity(gmtCreate)
     map-underscore-to-camel-case: true
 server:
   port: 8081

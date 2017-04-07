@@ -10,7 +10,8 @@ CREATE TABLE seckill_product(
   `gmt_end` DATETIME NOT NULL COMMENT '秒杀结束时间',
   `gmt_create` DATETIME NOT NULL DEFAULT current_timestamp COMMENT '创建时间',
   `gmt_modified` DATETIME NOT NULL DEFAULT current_timestamp COMMENT '修改时间',
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  KEY idx_gmt_create (gmt_create)
 )ENGINE = InnoDB AUTO_INCREMENT = 1000 DEFAULT CHARSET = utf8 COMMENT = '秒杀商品库存表';
 
 # 初始化数据

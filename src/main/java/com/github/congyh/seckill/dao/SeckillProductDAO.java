@@ -15,12 +15,13 @@ import java.util.List;
 @Mapper
 public interface SeckillProductDAO {
     /** 减库存 */
+    // TODO modifiedTime
     String REDUCE_NUMBER = "" +
         "update seckill_product " +
         "set number = number - 1 " +
         "where id = #{id} " +
-        "and start_time <= #{killTime} " +
-        "and end_time >= #{killTime} " +
+        "and gmt_start <= #{gmtKill} " +
+        "and gmt_end >= #{gmtKill} " +
         "and number > 0";
 
     /** 查询库存*/
@@ -31,19 +32,19 @@ public interface SeckillProductDAO {
     /** 查询全部库存 */
     String FIND_ALL = "" +
         "select * from seckill_product " +
-        "order by create_time desc " +
+        "order by gmt_create desc " +
         "limit #{offset}, #{limit}";
 
     /**
      * 减库存
      *
      * @param id 秒杀商品id
-     * @param killTime 秒杀时间
+     * @param gmtKill 秒杀时间
      * @return 更新语句影响的行数, 如果是0的话, 说明没有执行成功.
      */
     @Update(REDUCE_NUMBER)
     int reduceNumber(@Param("id") long id,
-                     @Param("killTime") Date killTime);
+                     @Param("gmtKill") Date gmtKill);
 
     /**
      * 查询单个商品详情

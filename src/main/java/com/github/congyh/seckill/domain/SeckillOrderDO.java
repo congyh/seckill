@@ -12,19 +12,21 @@ import java.util.Date;
 public class SeckillOrderDO {
     private Long id;
     /** 多对一对应关系, 在多的一方记录下唯一实体, 方便后续操作 */
-    private Long seckillProductDOId;
+    private Long seckillProductId;
     private Long userPhone;
     private Short orderStatus;
-    private Date createTime;
+    private Date gmtCreate;
+    private Date gmtModified;
 
     @Override
     public String toString() {
         return "SeckillOrderDO{" +
             "id=" + id +
-            ", seckillProductDOId=" + seckillProductDOId +
+            ", seckillProductId=" + seckillProductId +
             ", userPhone=" + userPhone +
             ", orderStatus=" + orderStatus +
-            ", createTime=" + createTime +
+            ", gmtCreate=" + gmtCreate +
+            ", gmtModified=" + gmtModified +
             '}';
     }
 
@@ -36,12 +38,12 @@ public class SeckillOrderDO {
         this.id = id;
     }
 
-    public Long getSeckillProductDOId() {
-        return seckillProductDOId;
+    public Long getSeckillProductId() {
+        return seckillProductId;
     }
 
-    public void setSeckillProductDOId(Long seckillProductDOId) {
-        this.seckillProductDOId = seckillProductDOId;
+    public void setSeckillProductId(Long seckillProductId) {
+        this.seckillProductId = seckillProductId;
     }
 
     public Long getUserPhone() {
@@ -60,11 +62,19 @@ public class SeckillOrderDO {
         this.orderStatus = orderStatus;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getGmtCreate() {
+        return gmtCreate;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

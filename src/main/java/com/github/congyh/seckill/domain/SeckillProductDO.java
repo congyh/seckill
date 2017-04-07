@@ -11,9 +11,8 @@ public class SeckillProductDO {
     private Long id;
     private String name;
     private Integer number;
-    private Date startTime;
-    private Date endTime;
-    private Date createTime;
+    private Date gmtStart;
+    private Date gmtEnd;
 
     @Override
     public String toString() {
@@ -21,9 +20,8 @@ public class SeckillProductDO {
             "id=" + id +
             ", name='" + name + '\'' +
             ", number=" + number +
-            ", startTime=" + startTime +
-            ", endTime=" + endTime +
-            ", createTime=" + createTime +
+            ", gmtStart=" + gmtStart +
+            ", gmtEnd=" + gmtEnd +
             '}';
     }
 
@@ -51,27 +49,19 @@ public class SeckillProductDO {
         this.number = number;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getGmtStart() {
+        return gmtStart;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setGmtStart(Date gmtStart) {
+        this.gmtStart = gmtStart;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Date getGmtEnd() {
+        return gmtEnd;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setGmtEnd(Date gmtEnd) {
+        this.gmtEnd = gmtEnd;
     }
 }

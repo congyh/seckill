@@ -64,7 +64,7 @@
         // 这里参数传入的是一个对象
         seckill.detail.init({
             productId: ${seckillProductDO.id?c},
-            startTime: '${seckillProductDO.startTime?long?c}',
+            gmtStart: '${seckillProductDO.gmtStart?long?c}',
             endTime: '${seckillProductDO.endTime?long?c}'
         })
     });
