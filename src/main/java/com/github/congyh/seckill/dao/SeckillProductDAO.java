@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.dao;
 
-import com.github.congyh.seckill.domain.ProductDO;
+import com.github.congyh.seckill.domain.SeckillProductDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
 @Mapper
-public interface ProductDAO {
+public interface SeckillProductDAO {
     /** 减库存 */
     String REDUCE_NUMBER = "" +
         "update seckill_product " +
@@ -52,7 +52,7 @@ public interface ProductDAO {
      * @return 单个商品详情
      */
     @Select(FIND_BY_ID)
-    ProductDO findById(@Param("id") long id);
+    SeckillProductDO findById(@Param("id") long id);
 
     /**
      * 根据偏移量查询秒杀商品列表
@@ -62,6 +62,6 @@ public interface ProductDAO {
      * @return 秒杀商品列表
      */
     @Select(FIND_ALL)
-    List<ProductDO> findAll(@Param("offset") int offset,
-                            @Param("limit") int limit);
+    List<SeckillProductDO> findAll(@Param("offset") int offset,
+                                   @Param("limit") int limit);
 }

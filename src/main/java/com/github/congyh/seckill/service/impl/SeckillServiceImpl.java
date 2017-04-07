@@ -1,9 +1,9 @@
 package com.github.congyh.seckill.service.impl;
 
-import com.github.congyh.seckill.dao.ProductDAO;
+import com.github.congyh.seckill.dao.SeckillProductDAO;
 import com.github.congyh.seckill.dao.RedisDAO;
-import com.github.congyh.seckill.dao.OrderDetailDAO;
-import com.github.congyh.seckill.domain.ProductDO;
+import com.github.congyh.seckill.dao.SeckillOrderDAO;
+import com.github.congyh.seckill.domain.SeckillProductDO;
 import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
 import com.github.congyh.seckill.enums.SeckillExecutionStatusEnum;
@@ -31,35 +31,35 @@ public class SeckillServiceImpl implements SeckillService {
     private static final String SALT = "gatg25tagfgp['lf[pal[;l,.l;";
 
     @Autowired
-    private ProductDAO productDAO;
+    private SeckillProductDAO seckillProductDAO;
 
     @Autowired
-    private OrderDetailDAO orderDetailDAO;
+    private SeckillOrderDAO seckillOrderDAO;
 
     @Autowired
     private RedisDAO redisDAO;
 
     @Override
-    public List<ProductDO> findAll() {
-        return productDAO.findAll(0, 4);
+    public List<SeckillProductDO> findAll() {
+        return seckillProductDAO.findAll(0, 4);
     }
 
     @Override
-    public ProductDO findById(long productId) {
-        return productDAO.findById(productId);
+    public SeckillProductDO findById(long productId) {
+        return seckillProductDAO.findById(productId);
     }
 
     @Override
     public SeckillUrlDTO exposeSeckillUrl(long productId) {
         // TODO 缓存最后要以横切的方式实现
-        ProductDO productDO = redisDAO.getProduct(productId);
-        if (productDO == null) {
-            productDO = productDAO.findById(productId);
+        SeckillProductDO seckillProductDO = redisDAO.getProduct(productId);
+        if (seckillProductDO == null) {
+            seckillProductDO = seckillProductDAO.findById(productId);
             // TODO 空指针异常最好也统一处理, 比较困难的是如何自动判别空的类型? 还是直接不判断了?
         }
 
-        Date startTime = productDO.getStartTime();
-        Date endTime = productDO.getEndTime();
+        Date startTime = seckillProductDO.getStartTime();
+        Date endTime = seckillProductDO.getEndTime();
         // 首先需要判断秒杀是否开启, 如果没有开启输出服务器时间和秒杀时间范围
         Date now = new Date();
         if (now.getTime() < startTime.getTime()
@@ -106,10 +106,10 @@ public class SeckillServiceImpl implements SeckillService {
         if (md5 == null || !md5.equals(toMD5(productId))) {
             throw new ServiceException("秒杀地址错误!");
         }
-        if (orderDetailDAO.save(null, productId, userPhone) == 0) {
+        if (seckillOrderDAO.save(null, productId, userPhone) == 0) {
             throw new ServiceException("您已成功秒杀, 无法重复秒杀!");
         }
-        if (productDAO.reduceNumber(productId, new Date()) == 0) {
+        if (seckillProductDAO.reduceNumber(productId, new Date()) == 0) {
             throw new ServiceException("该商品的秒杀已经结束!");
         }
 

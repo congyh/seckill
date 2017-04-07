@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.service;
 
-import com.github.congyh.seckill.domain.ProductDO;
+import com.github.congyh.seckill.domain.SeckillProductDO;
 import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
 import com.github.congyh.seckill.exception.ServiceException;
@@ -17,9 +17,9 @@ import java.util.List;
  */
 public interface SeckillService {
 
-    List<ProductDO> findAll();
+    List<SeckillProductDO> findAll();
 
-    ProductDO findById(long productId);
+    SeckillProductDO findById(long productId);
 
     /**
      * 暴露秒杀接口URL

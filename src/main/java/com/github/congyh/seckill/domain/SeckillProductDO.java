@@ -7,7 +7,7 @@ import java.util.Date;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class ProductDO {
+public class SeckillProductDO {
     private Long id;
     private String name;
     private Integer number;
@@ -17,7 +17,7 @@ public class ProductDO {
 
     @Override
     public String toString() {
-        return "ProductDO{" +
+        return "SeckillProductDO{" +
             "id=" + id +
             ", name='" + name + '\'' +
             ", number=" + number +

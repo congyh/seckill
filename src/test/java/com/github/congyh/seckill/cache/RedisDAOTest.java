@@ -1,8 +1,8 @@
 package com.github.congyh.seckill.cache;
 
-import com.github.congyh.seckill.dao.ProductDAO;
+import com.github.congyh.seckill.dao.SeckillProductDAO;
 import com.github.congyh.seckill.dao.RedisDAO;
-import com.github.congyh.seckill.domain.ProductDO;
+import com.github.congyh.seckill.domain.SeckillProductDO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +19,19 @@ public class RedisDAOTest {
     private RedisDAO redisDAO;
 
     @Autowired
-    private ProductDAO productDAO;
+    private SeckillProductDAO seckillProductDAO;
 
     @Test
     public void setAndGetSeckill() throws Exception {
         final long id = 1001;
-        ProductDO productDO = redisDAO.getProduct(id);
-        if (productDO == null) {
-            productDO = productDAO.findById(id);
-            if (productDO != null) {
-                redisDAO.setProduct(productDO);
-                System.out.println(productDO);
-                productDO = redisDAO.getProduct(id);
-                System.out.println(productDO);
+        SeckillProductDO seckillProductDO = redisDAO.getProduct(id);
+        if (seckillProductDO == null) {
+            seckillProductDO = seckillProductDAO.findById(id);
+            if (seckillProductDO != null) {
+                redisDAO.setProduct(seckillProductDO);
+                System.out.println(seckillProductDO);
+                seckillProductDO = redisDAO.getProduct(id);
+                System.out.println(seckillProductDO);
             }
         }
     }

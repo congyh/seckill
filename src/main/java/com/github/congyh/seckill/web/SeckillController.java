@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.web;
 
-import com.github.congyh.seckill.domain.ProductDO;
+import com.github.congyh.seckill.domain.SeckillProductDO;
 import com.github.congyh.seckill.dto.Result;
 import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
@@ -34,8 +34,8 @@ public class SeckillController {
      */
     @GetMapping("/products")
     public String products(Model model) {
-       List<ProductDO> productDOList = seckillService.findAll();
-       model.addAttribute("productDOList", productDOList);
+       List<SeckillProductDO> seckillProductDOList = seckillService.findAll();
+       model.addAttribute("seckillProductDOList", seckillProductDOList);
 
        return "products";
     }
@@ -51,10 +51,10 @@ public class SeckillController {
     public String productDetail(@PathVariable("id") long id,
                            Model model) {
         // TODO 这里的product可能是null, 需要进行统一异常处理.
-        ProductDO productDO = seckillService.findById(id);
-        model.addAttribute("productDO", productDO);
+        SeckillProductDO seckillProductDO = seckillService.findById(id);
+        model.addAttribute("seckillProductDO", seckillProductDO);
 
-        return "productDO-detail";
+        return "seckillProductDO-detail";
     }
 
 

@@ -16,7 +16,7 @@ CREATE TABLE seckill_product(
 )ENGINE = InnoDB AUTO_INCREMENT = 1000 DEFAULT CHARSET = utf8 COMMENT = '秒杀商品库存表';
 
 # 初始化数据
-INSERT INTO product(name, number, start_time, end_time)
+INSERT INTO seckill_product(name, number, start_time, end_time)
 VALUES
   ('1000元秒杀iphone6', 100, '2017-03-29 00:00:00', '2018-03-30 00:00:00'),
   ('500元秒杀ipad2', 200, '2017-03-29 00:00:00', '2018-03-30 00:00:00'),
@@ -24,13 +24,13 @@ VALUES
   ('200元秒杀红米note', 400, '2018-03-29 00:00:00', '2018-03-30 00:00:00');
 
 # 秒杀成功明细表
-# 用户登录认证相关的信息
 CREATE TABLE `seckill_order`(
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '订单id',
-  `product_id` BIGINT NOT NULL COMMENT '秒杀商品id',
-  `user_phone` BIGINT NOT NULL COMMENT '用户手机号码',
-  `state` TINYINT NOT NULL DEFAULT  -1 COMMENT '状态标志: -1, 无效; 0, 成功; 1, 已付款; 2, 已发货; 3, 已收货',
+  `seckill_product_id` BIGINT UNSIGNED NOT NULL COMMENT '秒杀商品id',
+  `user_phone` BIGINT UNSIGNED NOT NULL COMMENT '用户手机号码',
+  `order_status` TINYINT UNSIGNED NOT NULL DEFAULT  -1 COMMENT '状态标志: -1, 无效; 0, 成功; 1, 已付款; 2, 已发货; 3, 已收货',
   `create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (product_id, user_phone), # 联合主键
+  PRIMARY KEY (seckill_product_id, user_phone), # 联合主键
+  UNIQUE KEY uk_id (id),
   KEY idx_create_time (create_time)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT '秒杀成功明细表';
+) ENGINE = InnoDB AUTO_INCREMENT = 10000 DEFAULT CHARSET = utf8 COMMENT '秒杀成功明细表';

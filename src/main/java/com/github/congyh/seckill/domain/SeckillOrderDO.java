@@ -9,21 +9,21 @@ import java.util.Date;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class OrderDetailDO {
+public class SeckillOrderDO {
     private Long id;
     /** 多对一对应关系, 在多的一方记录下唯一实体, 方便后续操作 */
-    private ProductDO productDO;
+    private Long seckillProductDOId;
     private Long userPhone;
-    private Short state;
+    private Short orderStatus;
     private Date createTime;
 
     @Override
     public String toString() {
-        return "OrderDetailDO{" +
-            "productDO=" + productDO +
-            ", id=" + id +
+        return "SeckillOrderDO{" +
+            "id=" + id +
+            ", seckillProductDOId=" + seckillProductDOId +
             ", userPhone=" + userPhone +
-            ", state=" + state +
+            ", orderStatus=" + orderStatus +
             ", createTime=" + createTime +
             '}';
     }
@@ -36,6 +36,14 @@ public class OrderDetailDO {
         this.id = id;
     }
 
+    public Long getSeckillProductDOId() {
+        return seckillProductDOId;
+    }
+
+    public void setSeckillProductDOId(Long seckillProductDOId) {
+        this.seckillProductDOId = seckillProductDOId;
+    }
+
     public Long getUserPhone() {
         return userPhone;
     }
@@ -44,12 +52,12 @@ public class OrderDetailDO {
         this.userPhone = userPhone;
     }
 
-    public Short getState() {
-        return state;
+    public Short getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setState(Short state) {
-        this.state = state;
+    public void setOrderStatus(Short orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public Date getCreateTime() {
@@ -59,13 +67,4 @@ public class OrderDetailDO {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
-    public ProductDO getProductDO() {
-        return productDO;
-    }
-
-    public void setProductDO(ProductDO productDO) {
-        this.productDO = productDO;
-    }
-
 }

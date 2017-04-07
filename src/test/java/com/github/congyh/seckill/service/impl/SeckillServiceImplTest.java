@@ -1,6 +1,6 @@
 package com.github.congyh.seckill.service.impl;
 
-import com.github.congyh.seckill.domain.ProductDO;
+import com.github.congyh.seckill.domain.SeckillProductDO;
 import com.github.congyh.seckill.dto.SeckillExecutionDTO;
 import com.github.congyh.seckill.dto.SeckillUrlDTO;
 import com.github.congyh.seckill.service.SeckillService;
@@ -35,8 +35,8 @@ public class SeckillServiceImplTest {
 
     @Test
     public void findAll() throws Exception {
-        List<ProductDO> productDOList = seckillService.findAll();
-        logger.info("list={}", productDOList);
+        List<SeckillProductDO> seckillProductDOList = seckillService.findAll();
+        logger.info("list={}", seckillProductDOList);
     }
 
     @Test
