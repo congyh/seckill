@@ -1,5 +1,6 @@
 package com.github.congyh.seckill.aop;
 
+import com.github.congyh.seckill.exception.DAOException;
 import com.github.congyh.seckill.util.ExceptionUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -30,8 +31,6 @@ public class ServiceExceptionLogger {
     /**
      * 记录错误日志
      *
-     * TODO 要改为文件记录的形式, 查阅logback的配置方法
-     *
      * @param joinPoint 方法连接点
      * @param exception 封装后的异常类型
      */
@@ -40,8 +39,12 @@ public class ServiceExceptionLogger {
         String className = joinPoint.getSignature().getDeclaringTypeName();
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
-        logger.error("-----" + className + "." + methodName + "()"+"-----");
-        logger.error("调用参数: " + Arrays.toString(args));
-        logger.error("exception message: " + ExceptionUtils.toString(exception.getCause()));
+        logger.error("-----{}.{}()-----", className, methodName);
+        logger.error("调用参数: {}", Arrays.toString(args));
+        if (exception instanceof DAOException) {
+            logger.error("exception message: {}", ExceptionUtils.toString(exception.getCause()));
+        } else {
+            logger.error("exception message: {}", ExceptionUtils.toString(exception));
+        }
     }
 }

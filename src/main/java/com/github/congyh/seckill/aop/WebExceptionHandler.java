@@ -29,4 +29,16 @@ public class WebExceptionHandler {
     public Result handleDAOException(DAOException e) {
         return new Result(ResultTypeEnum.UNKNOWN_ERROR);
     }
+
+    /**
+     * 对未知异常类型统一处理
+     *
+     * @param e unknown error
+     * @return result
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Result<String> handleException(Exception e) {
+        return new Result<>(ResultTypeEnum.UNKNOWN_ERROR);
+    }
 }

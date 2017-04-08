@@ -52,9 +52,6 @@ public class SeckillServiceImpl implements SeckillService {
     @Override
     public SeckillProductDO findById(long productId) throws DAOException {
         try {
-            // debug
-            SeckillProductDO seckillProduct = seckillProductDAO.findById(productId);
-            seckillProduct.getId();
             return seckillProductDAO.findById(productId);
         } catch (Exception e) {
             throw new DAOException(e);
