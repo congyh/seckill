@@ -1,5 +1,6 @@
 package com.github.congyh.seckill.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +10,9 @@ import java.util.Date;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class SeckillOrderDO {
+public class SeckillOrderDO implements Serializable {
+
+    private static final long serialVersionUID = -7938471904858934444L;
     private Long id;
     /** 多对一对应关系, 在多的一方记录下唯一实体, 方便后续操作 */
     private Long seckillProductId;

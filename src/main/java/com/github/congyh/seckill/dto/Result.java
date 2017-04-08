@@ -2,13 +2,16 @@ package com.github.congyh.seckill.dto;
 
 import com.github.congyh.seckill.enums.ResultTypeEnum;
 
+import java.io.Serializable;
+
 /**
  * 封装所有返回类结果信息
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class Result<T> {
+public class Result<T> implements Serializable {
 
+    private static final long serialVersionUID = -3339352192092580285L;
     /** 错误码 */
     public Integer code;
     /** 提示信息 */

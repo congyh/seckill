@@ -1,5 +1,6 @@
 package com.github.congyh.seckill.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,9 @@ import java.util.Date;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class SeckillProductDO {
+public class SeckillProductDO implements Serializable {
+
+    private static final long serialVersionUID = -8891165308167638620L;
     private Long id;
     private String name;
     private Integer number;

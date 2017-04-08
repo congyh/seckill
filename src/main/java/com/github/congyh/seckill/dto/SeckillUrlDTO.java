@@ -1,12 +1,15 @@
 package com.github.congyh.seckill.dto;
 
+import java.io.Serializable;
+
 /**
  * 秒杀地址封装类
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
-public class SeckillUrlDTO {
+public class SeckillUrlDTO implements Serializable {
 
+    private static final long serialVersionUID = -2578192044275753056L;
     private Long productId;
     /** 一种加密措施 */
     private String md5;
