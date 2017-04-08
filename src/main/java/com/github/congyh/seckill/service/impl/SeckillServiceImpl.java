@@ -1,5 +1,6 @@
 package com.github.congyh.seckill.service.impl;
 
+import com.github.congyh.seckill.constant.CacheConsts;
 import com.github.congyh.seckill.dao.RedisDAO;
 import com.github.congyh.seckill.dao.SeckillOrderDAO;
 import com.github.congyh.seckill.dao.SeckillProductDAO;
@@ -13,6 +14,9 @@ import com.github.congyh.seckill.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -26,7 +30,9 @@ import java.util.List;
 @Service
 public class SeckillServiceImpl implements SeckillService {
 
-    private static Logger logger = LoggerFactory.getLogger(SeckillServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SeckillServiceImpl.class);
+
+    private static final String SECKILL_URL_KEY = "seckillUrl";
     // 提高MD5算法的加密程度
     // TODO 前端部分, 也就是product-detail.ftl中md5与productId会一并传递过去, 还是不安全??
     private static final String SALT = "gatg25tagfgp['lf[pal[;l,.l;";
@@ -37,10 +43,8 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     private SeckillOrderDAO seckillOrderDAO;
 
-    @Autowired
-    private RedisDAO redisDAO;
-
     @Override
+    @Cacheable(cacheNames = CacheConsts.PRODUCT_LIST_KEY)
     public List<SeckillProductDO> findAll() throws DAOException {
         try {
             return seckillProductDAO.findAll(0, 4);
@@ -59,15 +63,12 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     @Override
+    @Cacheable(cacheNames = SECKILL_URL_KEY)
     public SeckillUrlDTO exposeSeckillUrl(long seckillProductId) throws DAOException {
         try {
-            // TODO 缓存最后要以横切的方式实现
-            SeckillProductDO seckillProductDO = redisDAO.getProduct(seckillProductId);
-            if (seckillProductDO == null) {
-                seckillProductDO = seckillProductDAO.findById(seckillProductId);
-            }
-            Date gmtStart = seckillProductDO.getGmtStart();
-            Date gmtEnd = seckillProductDO.getGmtEnd();
+            SeckillProductDO seckillProduct = seckillProductDAO.findById(seckillProductId);
+            Date gmtStart = seckillProduct.getGmtStart();
+            Date gmtEnd = seckillProduct.getGmtEnd();
             // 首先需要判断秒杀是否开启, 如果没有开启输出服务器时间和秒杀时间范围
             Date gmtNow = new Date();
             if (gmtNow.getTime() < gmtStart.getTime()

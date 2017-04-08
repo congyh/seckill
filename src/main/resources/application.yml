@@ -19,10 +19,6 @@ spring:
 #      #这是最常用的一种策略, 如果表不存在会根据java程序中定义的Entity自动建表.
 #      ddl-auto: update
 #    show-sql: true
-#  redis:
-#    host: localhost
-#    port: 6379
-#    password: secret
 mybatis:
   # 实体路径名, 定义后在xml mapper文件中直接用相对路径即可
   type-aliases-package: com.github.congyh.domain
@@ -37,9 +33,6 @@ mybatis:
     map-underscore-to-camel-case: true
 server:
   port: 8081
-redis:
-  ip: localhost
-  port: 6379
 
 
 
