@@ -7,6 +7,7 @@ import io.protostuff.ProtobufIOUtil;
 import io.protostuff.runtime.RuntimeSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -20,12 +21,14 @@ import redis.clients.jedis.JedisPool;
  *
  * @author <a href="mailto:yihao.cong@outlook.com">Cong Yihao</a>
  */
+@Deprecated
 public class RedisDAOImpl implements RedisDAO {
 
     private static Logger logger = LoggerFactory.getLogger(RedisDAOImpl.class);
     // 动态生成序列化所用的schema
     private static RuntimeSchema<SeckillProductDO> schema = RuntimeSchema.createFrom(SeckillProductDO.class);
 
+    @Autowired
     private final JedisPool jedisPool;
 
     public RedisDAOImpl(String ip, int port) {
