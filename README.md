@@ -4,7 +4,8 @@
 
 ## 使用方法
 
-1. 首先更改`application.yml`中配置mysql和Redis的连接.
+1. 首先导入src/resources/sql/schema.sql到mysql中.
+1. 更改`application.yml`中配置mysql和Redis的连接.
 1. 然后使用以下方法启用:
 
 ### 方法一
