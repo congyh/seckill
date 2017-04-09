@@ -4,7 +4,7 @@
     <!--开启二级缓存支持-->
     <cache />
     <resultMap id="seckillOrder" type="com.github.congyh.seckill.domain.SeckillOrderDO">
-        <result column="id" property="id"/>
+        <id column="id" property="id"/>
         <result column="seckill_product_id" property="seckillProductId"/>
         <result column="user_phone" property="userPhone"/>
         <result column="order_status" property="orderStatus"/>

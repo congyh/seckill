@@ -4,7 +4,7 @@
     <!--开启二级缓存支持-->
     <cache />
     <resultMap id="seckillProductDO" type="com.github.congyh.seckill.domain.SeckillProductDO">
-        <result column="id" property="id"/>
+        <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="number" property="number"/>
         <result column="gmt_start" property="gmtStart"/>
