@@ -1,38 +1,20 @@
-
-# 告诉spring boot使用哪个配置文件启动
-# 如果直接将配置写在这里, 就代表是通用的配置
 spring:
-#  profiles:
-#    active: prod
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/seckill
-#    url: jdbc:mysql://localhost:3306/spring_transaction
     username: root
     password: 1703649
   output:
     ansi:
-      # 检测终端是否支持彩色日志输出, 如果支持, 以彩色输出
       enabled: detect
-#  jpa:
-#    hibernate:
-#      #这是最常用的一种策略, 如果表不存在会根据java程序中定义的Entity自动建表.
-#      ddl-auto: update
-#    show-sql: true
 mybatis:
-  # 实体路径名, 定义后在xml mapper文件中直接用相对路径即可
   type-aliases-package: com.github.congyh.domain
-  # xml mapper文件路径
   mapper-locations: classpath:mapper/*.xml
   configuration:
-    # 使用数据库自增主键策略
     use-generated-keys: true
-    # 允许为列设置别名, 例如select name as title ...
-    use-column-label: true
-    # 开启驼峰命名转换, 例如Table(create_time) 到 Entity(gmtCreate)
     map-underscore-to-camel-case: true
+    database-id: mysql
 server:
   port: 8081
 
-cache
 
