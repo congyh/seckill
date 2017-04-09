@@ -24,7 +24,8 @@ import redis.clients.jedis.JedisPool;
 @Deprecated
 public class RedisDAOImpl implements RedisDAO {
 
-    private static Logger logger = LoggerFactory.getLogger(RedisDAOImpl.class);
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     // 动态生成序列化所用的schema
     private static RuntimeSchema<SeckillProductDO> schema = RuntimeSchema.createFrom(SeckillProductDO.class);
 

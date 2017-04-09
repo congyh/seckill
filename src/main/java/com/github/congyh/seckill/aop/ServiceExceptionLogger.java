@@ -23,7 +23,7 @@ import java.util.Arrays;
 @Component
 public class ServiceExceptionLogger {
 
-    private static final Logger logger = LoggerFactory.getLogger(ServiceExceptionLogger.class);
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Pointcut("execution(public * com.github.congyh.seckill.service.*.*(..))")
     public void log() {}

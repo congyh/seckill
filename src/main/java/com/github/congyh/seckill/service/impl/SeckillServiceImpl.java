@@ -30,7 +30,7 @@ import java.util.List;
 @Service
 public class SeckillServiceImpl implements SeckillService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SeckillServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final String SECKILL_URL_KEY = "seckillUrl";
     // 提高MD5算法的加密程度

@@ -7,8 +7,6 @@ import com.github.congyh.seckill.dto.SeckillUrlDTO;
 import com.github.congyh.seckill.enums.ResultTypeEnum;
 import com.github.congyh.seckill.exception.DomainNotFoundException;
 import com.github.congyh.seckill.service.SeckillService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +20,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/seckill")
 public class SeckillController {
-
-    private static final Logger logger = LoggerFactory.getLogger(SeckillController.class);
 
     @Autowired
     private SeckillService seckillService;
