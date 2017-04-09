@@ -3,7 +3,7 @@
 <mapper namespace="com.github.congyh.seckill.dao.SeckillProductDAO">
     <!--开启二级缓存支持-->
     <cache />
-    <resultMap id="seckillProductDO" type="com.github.congyh.seckill.domain.SeckillProductDO">
+    <resultMap id="seckillProductDO" type="SeckillProductDO">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="number" property="number"/>

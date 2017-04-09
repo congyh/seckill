@@ -8,7 +8,7 @@ spring:
     ansi:
       enabled: detect
 mybatis:
-  type-aliases-package: com.github.congyh.domain
+  type-aliases-package: com.github.congyh.seckill.domain
   mapper-locations: classpath:mapper/*.xml
   configuration:
     use-generated-keys: true

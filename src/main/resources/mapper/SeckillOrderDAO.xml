@@ -3,13 +3,14 @@
 <mapper namespace="com.github.congyh.seckill.dao.SeckillOrderDAO">
     <!--开启二级缓存支持-->
     <cache />
-    <resultMap id="seckillOrder" type="com.github.congyh.seckill.domain.SeckillOrderDO">
+    <resultMap id="seckillOrder" type="SeckillOrderDO">
         <id column="id" property="id"/>
-        <result column="seckill_product_id" property="seckillProductId"/>
         <result column="user_phone" property="userPhone"/>
         <result column="order_status" property="orderStatus"/>
         <result column="gmt_create" property="gmtCreate"/>
         <result column="gmt_modified" property="gmtModified"/>
+        <association property="seckillProduct" column="seckill_product_id" javaType="SeckillProductDO"
+                     select="com.github.congyh.seckill.dao.SeckillProductDAO.findById" />
     </resultMap>
 
     <insert id="save" flushCache="true">

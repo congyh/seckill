@@ -15,7 +15,7 @@ public class SeckillOrderDO implements Serializable {
     private static final long serialVersionUID = -7938471904858934444L;
     private Long id;
     /** 多对一对应关系, 在多的一方记录下唯一实体, 方便后续操作 */
-    private Long seckillProductId;
+    private SeckillProductDO seckillProduct;
     private Long userPhone;
     private Short orderStatus;
     private Date gmtCreate;
@@ -25,7 +25,7 @@ public class SeckillOrderDO implements Serializable {
     public String toString() {
         return "SeckillOrderDO{" +
             "id=" + id +
-            ", seckillProductId=" + seckillProductId +
+            ", seckillProduct=" + seckillProduct +
             ", userPhone=" + userPhone +
             ", orderStatus=" + orderStatus +
             ", gmtCreate=" + gmtCreate +
@@ -41,12 +41,12 @@ public class SeckillOrderDO implements Serializable {
         this.id = id;
     }
 
-    public Long getSeckillProductId() {
-        return seckillProductId;
+    public SeckillProductDO getSeckillProduct() {
+        return seckillProduct;
     }
 
-    public void setSeckillProductId(Long seckillProductId) {
-        this.seckillProductId = seckillProductId;
+    public void setSeckillProduct(SeckillProductDO seckillProduct) {
+        this.seckillProduct = seckillProduct;
     }
 
     public Long getUserPhone() {
